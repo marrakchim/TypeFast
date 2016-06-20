@@ -1,0 +1,47 @@
+
+Mesurer la rapidité d'une personne en tapant sur le clavier.
+
+Administrateur : 
+
+	- visualise les scores des utilisateurs
+	- insere les paragraphes à taper -> convertis en image
+	- bouton ou fonction automatique : afficher les scores de tous les joueurs après les 2h de jeu
+
+
+Utilisateur : 
+
+	- 3 essais maximum sur 2h 
+	- duree de jeu : 5min (compte à rebours)
+
+
+Le jeu :
+
+	- score maximal 100pts
+	- une erreur/mot manquant = -0.5pt
+
+
+
+	ADMINISTRATEUR : 
+	
+		* view des scores de tous les utilisateurs
+		* insertion paragraphes
+		* convertion en image
+		* fonction affichage des scores après 2h de jeu : pour chaque utilisateur ?
+
+	UTILISATEUR : 
+
+		* inscription 
+		* compte à rebours, 3 essais sur 2h
+
+	JEU :
+
+		* comparaison texte tapé et texte initial
+		* gestion du temps : 5min par partie
+		* gestion erreurs 
+
+
+Base de données : 
+
+	user : login, password, timeLogin, nbTry, timePlay
+
+	game : text, idUser, img
