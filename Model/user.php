@@ -18,7 +18,7 @@ public static function create($user_id,$user){
   //$theDate = date('Y-m-d H:i');
   //$var->user_date_register = $theDate;
   R::store( $var );
-
+   
 
 }
 
