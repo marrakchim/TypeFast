@@ -44,15 +44,15 @@
 						<h1 class="text-center text-bold text-light mt-4x">Connexion</h1>
 						<div class="well row pt-2x pb-3x bk-light">
 							<div class="col-md-8 col-md-offset-2">
-								<form action="loginBDD.php" method="post" class="mt">
+								<form action="" class="mt">
 
 									<label for="" class="text-uppercase text-sm">Votre pseudo</label>
-									<input type="text" name="pseudo" placeholder="Username" class="form-control mb">
+									<input type="text" id="login" placeholder="Username" class="form-control mb">
 
 									<label for="" class="text-uppercase text-sm">Mot de passe</label>
-									<input type="password" name="mdp" placeholder="Password" class="form-control mb">
+									<input type="password" id="password" placeholder="Password" class="form-control mb">
 
-									<button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+									<button id="login-btn" class="btn btn-primary btn-block" type="button">Se connecter</button>
 
 								</form>
 							</div>
@@ -78,6 +78,13 @@
 	<script src="js/main.js"></script>
 	<script src="js/controller.js"></script>
 
+
+	<script>
+				$(function(){
+						manageLogin();
+
+				});
+	</script>
 
 
 </body>

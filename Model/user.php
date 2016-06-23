@@ -5,16 +5,19 @@ Class User {
 
 public static $table_name = "user";
 
-public static function create($user_login, $user_password){
+public static function create($user_id,$user){
 
-$var = R::dispense(User::$table_name);
-$var->element_id = uniqid();
-$var->pseudo = $user_login;
-$var->password= hash('md4', $user_password);
-$var->admin=0;
-//$theDate = date('Y-m-d H:i');
-//$var->user_date_register = $theDate;
-R::store( $var );
+  $var = R::dispense(User::$table_name);
+
+  if($user_id == NULL) $var->element_id = uniqid();
+  else $var->element_id = $user_id;
+
+  $var->pseudo = $user['login'];
+  $var->password= hash('md4', $user['password']);
+  $var->admin=0;
+  //$theDate = date('Y-m-d H:i');
+  //$var->user_date_register = $theDate;
+  R::store( $var );
 
 
 }
@@ -58,6 +61,7 @@ R::trash( User::findOneById($elemen_uuid) );
 /******************/
 
 public static function connect($login, $pass){
+$pass = hash('md4', $pass);
 $var = R::findOne(User::$table_name , ' login = ? and password = ? ', [ $login, $pass ] );
 if ($var != NULL) {
 return $var;
