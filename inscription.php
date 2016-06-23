@@ -48,13 +48,13 @@
 							<div class="col-md-8 col-md-offset-2">
 								<div id="errorDiv"></div>
 
-								<form action=""  class="mt">
+								<form>
 
 									<label for="" class="text-uppercase text-sm">Votre pseudo</label>
-									<input type="text" id="login" name="pseudo" placeholder="Pseudo" class="form-control mb">
+									<input type="text" id="login" placeholder="Pseudo" class="form-control mb">
 
 									<label for="" class="text-uppercase text-sm">Mot de passe</label>
-									<input type="password" id="password" name="mdp" placeholder="Mot de passe" class="form-control mb">
+									<input type="password" id="password" placeholder="Mot de passe" class="form-control mb">
 
 									<button id="registration" class="btn btn-primary btn-block" type="button">Inscription</button>
 

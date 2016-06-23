@@ -4,42 +4,45 @@ function manageLogin(){
       login = $("#login").val();
       password = $("#password").val();
 
-      //formChecking(login, password);
+      if (formChecking(login, password)) {
 
-      var data = {action:'user_check', login:login, password : password};
+          var data = {action:'user_check', login:login, password : password};
 
-      request = $.ajax({
-         url:'controller.php',
-         type: "POST",
-         data: data
-      });
+          request = $.ajax({
+             url:'controller.php',
+             type: "POST",
+             data: data
+          });
 
-      request.done(function (response){
-        console.log(response);
-        if (response === true){
-            window.location.href  = "index.php";
-        }else {
-            showError(response);
-        }
+          request.done(function (response){
+            data = jQuery.parseJSON(response);
+            if (data.status === 'success'){
+                //window.location.href  = "index.php";
+                console.log(data.response);
+            }else {
+                showError(data.response);
+            }
 
-      });
+          });
 
-      request.fail(function (status, thrown){
-          console.error(
-              "Erreur d'execution de la requéte: "+
-              status, thrown
-          );
-      });
+          request.fail(function (status, thrown){
+              console.error(
+                  "Erreur d'execution de la requéte: "+
+                  status, thrown
+              );
+          });
+      }
 
     });
 
+      
     $(".form-control").on('input',function(){
       console.log("hide error");
       hideError();
     });
 
 
-    }
+}
 
 
 
@@ -53,34 +56,39 @@ function manageRegistration (){
       login = $("#login").val();
       password = $("#password").val();
 
-      formChecking(login, password);
+        if (formChecking(login, password)) {
+          
+          var data = {action:'user_registration', login:login, password:password};
 
-      var data = {action:'user_registration', login:login, password:password};
+          request = $.ajax({
+             url:'controller.php',
+             type: "POST",
+             data: data
+          });
 
-      request = $.ajax({
-         url:'controller.php',
-         type: "POST",
-         data: data
+          request.done(function (response){
+            data = jQuery.parseJSON(response);
+            if (data.status === 'success'){
+                window.location.href = "login.php";
+            }else {
+                showError(response);
+            }
+
+          });
+
+          request.fail(function (status, thrown){
+              console.error(
+                  "Erreur d'execution de la requéte: "+
+                  status, thrown
+              );
+          });
+
+        }  
+
       });
 
-      request.done(function (response){
-        console.log(response);
-        if (response === true){
-            window.location.href  = "index.php";
-        }else {
-            showError(response);
-        }
 
-      });
-
-      request.fail(function (status, thrown){
-          console.error(
-              "Erreur d'execution de la requéte: "+
-              status, thrown
-          );
-      });
-
-    });
+      
 
     $(".form-control").on('input',function(){
       console.log("hide error");
@@ -101,7 +109,22 @@ function hideError (){
 
 function formChecking (login, password){
 
-  if(login == "") showError("Le champ login est obligatoire");
-  if(password == "") showError("Vous devez entrer un mot de passe");
+  if(login == "")
+  {
+    showError("Le champ login est obligatoire");
+    return false;
+  }
+  else
+  {
+    if(password == "")
+    {
+     showError("Vous devez entrer un mot de passe");  
+     return false; 
+    }
+    else
+    {
+      return true;
+    }
+  }  
 
 }
