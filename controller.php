@@ -14,6 +14,7 @@ if(isset($_GET['action']) && $_GET['action']!= null)
 {
   $action = $_GET['action'];
 
+
     switch($action)
     {
 
@@ -40,7 +41,6 @@ if(isset($_POST['action']) && $_POST['action']!= null)
 
 Class Controller{
 
-
     public function json_success($result){
         $resultA = [];
         $resultA['status'] = "success";
@@ -56,13 +56,15 @@ Class Controller{
     }
 
 
-
     public function user_registration()
     {
-
       $data=[];
       $data["login"]=$_POST['login'];
       $data["password"]=$_POST['password'];
+      $data["nom"]=$_POST['nom'];
+      $data["prenom"]=$_POST['prenom'];
+      $data["mail"]=$_POST['mail'];
+
 
       $result = User::create(null, $data);
       if ($result != false) {
@@ -70,37 +72,37 @@ Class Controller{
       }else {
           echo Controller::json_error("Impossible de créer le compte");
       }
-
     }
 
     public function user_check()
     {
-      
-      $login = $_POST['login'];
-      $password = $_POST['password'];
+        if(isset($_POST['login']) && isset($_POST['password'])){
+          $login = $_POST['login'];
+          $password = $_POST['password'];
 
-      
-      $user = User::connect($login,$password);
+          $user = User::connect($login,$password);
 
-      if($user != false)
-      {
-        try {
-          $_SESSION['id'] = $user->id;
-          $_SESSION['admin']=  $user->admin;
-          $_SESSION['login'] = $user->login;
-          $_SESSION['password'] = $user->password;
-          echo Controller::json_success($user);
-        } catch (Exception $e) {
-          echo Controller::json_error("Impossible de se connecter");
-        }
-      }else {
-        echo Controller::json_error("Login ou mot de passe incorrecte");
-      } 
-        
+          if($user!=false)
+          {
+            try {
+              $_SESSION['id'] = $user->id;
+              $_SESSION['admin']=  $user->admin;
+              $_SESSION['login'] = $user->login;
+              $_SESSION['password'] = $user->password;
+              //header('Location: index.html');
+              echo Controller::json_success($user);
+              } catch (Exception $e) {
+              echo Controller::json_error("Impossible de se connecter");
+            }
+          }else {
+              echo Controller::json_error("Login ou mot de passe incorrect");
+          }
 
+
+
+      }
 
     }
-
 }
 
  ?>
