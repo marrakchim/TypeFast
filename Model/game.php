@@ -5,16 +5,16 @@ Class Game {
 
 public static $table_name = "game";
 
-public static function create($game_text,$game_idUser){
+public static function create($label, $game_text){
 
-$var = R::dispense(Game::$table_name);
-$var->element_id = uniqid();
-$var->text = $game_text;
-$var->idUser= $game_idUser;
-
-//$theDate = date('Y-m-d H:i');
-//$var->user_date_register = $theDate;
-R::store( $var );
+	$var = R::dispense(Game::$table_name);
+	$var->label = $label;
+	$var->text = $game_text;
+	$var->status = 0;
+	$var->difficulty = 0;
+	//$theDate = date('Y-m-d H:i');
+	//$var->user_date_register = $theDate;
+	R::store( $var );
 }
 
 public static function setUserData($elemen_uuid, $elem_name, $elem_value){
@@ -37,7 +37,7 @@ $var =  R::findOne(Game::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
 return $var;
 }
 
-public static function findAll_User(){
+public static function findAll_Games(){
 return R::findAll(Game::$table_name);
 }
 

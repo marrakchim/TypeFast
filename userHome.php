@@ -8,27 +8,62 @@ if (!$_SESSION['admin']) {
 
 include ('header.php');
 
+
+
 ?>
 
 <title>TypeFast - <?php echo $_SESSION['login']; ?> </title>
 
   <div class="content-wrapper">
     <div class="container-fluid">
-      <div class="container">
+
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
-              <div class="well row pt-2x pb-3x bk-light">
-                <div class="text-center text-dark">
-                <div class="jumbotron">
-                  <h1>Bienvenue !</h1>
-                  <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                  <p><a class="btn btn-danger btn-lg"  id="newGame">Nouvelle partie</a></p>
-                </div>
-                </div>
-              </div>
+
+          <div class="col-md-12">
+
+              THIS IS THE GAME
+
           </div>
+
+
         </div>
-      </div>
+
+
+
+        <div id="popup-view" class="popup showMe">
+          <div class="overflow"></div>
+          <div class="row modal-pop">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="well row pt-3x pb-1x bk-light">
+                  <div class="text-center text-dark">
+                  <div class="jumbotron">
+                    <h1>Bienvenue !</h1>
+                    <p>Veuillez choisir une partie </p>
+
+                    <div class="hr-dashed"></div>
+                    <div class="form-group">
+                      <div class="col-sm-8">
+                        <select class="form-control">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                         <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
+                      </div>  
+                    </div>
+                     <br>
+
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>  
+
     </div>
   </div>
 
@@ -52,9 +87,23 @@ include ('header.php');
 
       //newGame(userID);
 
-      startGame(userID);
+      //startGame(userID);
+
+      // loading end : fonction : appel controlleur.php -> games.php
+      get_game_list();
+
+
+        $('#newGame').on('click', function(){
+              close_popup();
+        });
 
     });
+
+
+    function close_popup(){
+        Pblock = $('#popup-view').removeClass('showMe');
+    }
+
   </script>
 
 

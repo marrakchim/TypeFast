@@ -1,3 +1,11 @@
+<?php
+
+if (!isset($_SESSION['id'])) {
+	header('location:login.php');
+}
+
+?>
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,6 +32,9 @@
 	<!-- Admin Stye -->
 	<link rel="stylesheet" href="css/style.css">
 
+
+	<link rel="stylesheet" href="mystyle.css">
+
 	<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -36,13 +47,10 @@
 		<a href="index.php" class="logo"><img src="img/logo.jpg" class="img-responsive" alt=""></a>
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
-			<li><a href="#">Help</a></li>
-			<li><a href="#">Settings</a></li>
 			<li class="ts-account">
-				<a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
+				<a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> <?php  echo $_SESSION['username']; ?> <i class="fa fa-angle-down hidden-side"></i></a>
 				<ul>
 					<li><a href="#">My Account</a></li>
-					<li><a href="#">Edit Account</a></li>
 					<li><a href="logout.php">Logout</a></li>
 				</ul>
 			</li>
@@ -50,6 +58,8 @@
 	</div>
 
 	<div class="ts-main-content">
+
+		<?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ): ?>
 		<nav class="ts-sidebar">
 			<ul class="ts-sidebar-menu">
 				<li class="ts-label">Search</li>
@@ -89,20 +99,6 @@
 						<li><a href="login.php">Login page</a></li>
 					</ul>
 				</li>
-
-				<!-- Account from above -->
-				<ul class="ts-profile-nav">
-					<li><a href="#">Help</a></li>
-					<li><a href="#">Settings</a></li>
-					<li class="ts-account">
-						<a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
-						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Edit Account</a></li>
-							<li><a href="#">Logout</a></li>
-						</ul>
-					</li>
-				</ul>
-
 			</ul>
 		</nav>
+		<?php endif; ?>

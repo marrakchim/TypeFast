@@ -17,7 +17,9 @@ if(isset($_GET['action']) && $_GET['action']!= null)
 
     switch($action)
     {
-
+        case 'game_get_list':
+          Controller::game_get_list();
+          break;
     }
 
 }
@@ -46,19 +48,8 @@ if(isset($_POST['action']) && $_POST['action']!= null)
 
 Class Controller{
 
-    public function json_success($result){
-        $resultA = [];
-        $resultA['status'] = "success";
-        $resultA['response'] = $result;
-        return json_encode($resultA);
-    }
-
-    public function json_error($message){
-        $resultA = [];
-        $resultA['status'] = "error";
-        $resultA['response'] = $message;
-        return json_encode($resultA);
-    }
+  
+    /***********************************************************************************************/
 
     public function game_startGame()
     {
@@ -70,6 +61,12 @@ Class Controller{
        }
     }
 
+    public function game_get_list(){
+        
+    }
+
+
+    /***********************************************************************************************/
 
     public function user_registration()
     {
@@ -93,8 +90,8 @@ Class Controller{
       }
     }
 
-    public function user_check()
-    {
+    public function user_check() {
+
         if(isset($_POST['login']) && isset($_POST['password'])){
           $login = $_POST['login'];
           $password = $_POST['password'];
@@ -108,6 +105,7 @@ Class Controller{
               $_SESSION['admin']=  $user->admin;
               $_SESSION['login'] = $user->login;
               $_SESSION['password'] = $user->password;
+              $_SESSION['username'] = $user->nom." ".$user->prenom;
               //header('Location: index.html');
               echo Controller::json_success($user);
               } catch (Exception $e) {
@@ -117,11 +115,29 @@ Class Controller{
               echo Controller::json_error("Login ou mot de passe incorrect");
           }
 
-
-
       }
 
     }
+
+    /*************************************************************************************************/
+
+
+    public function json_success($result){
+        $resultA = [];
+        $resultA['status'] = "success";
+        $resultA['response'] = $result;
+        return json_encode($resultA);
+    }
+
+    public function json_error($message){
+        $resultA = [];
+        $resultA['status'] = "error";
+        $resultA['response'] = $message;
+        return json_encode($resultA);
+    }
+
+
+
 }
 
- ?>
+?>
