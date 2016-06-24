@@ -1,3 +1,44 @@
+function newGame(userID)
+{
+  console.log("new game");
+  $('#newGame').on('click', function(e) {
+
+    console.log("click"+userID);
+
+
+    $.get("controller.php",function(data,status){
+      console.log(data);
+      alert( "Data Loaded: " + data + "Status: " + status );
+    });
+
+    var data = {action:'game_newGame'};
+
+    request = $.ajax({
+       url:'controller.php',
+       type: "GET",
+       data: data
+    });
+
+
+  });
+}
+
+
+
+
+function startGame(userID)
+{
+
+      var data = {action:'game_startGame', userID:userID, matchID:1};
+
+      request = $.ajax({
+         url:'controller.php',
+         type: "POST",
+         data: data
+      });
+}
+
+
 function manageLogin(){
 
     $('#login-btn').on('click', function(e) {
@@ -55,7 +96,10 @@ function manageRegistrationAdmin (){
       nom = $("#nom").val();
       prenom = $("#prenom").val();
       mail = $("#mail").val();
-      admin = $('#admin').val();
+      if ($('#admin').is(":checked"))
+      {
+        admin=1
+      } else admin=0;
 
       if (registrationFormChecking(login, password,password_check,nom, prenom, mail)) {
 

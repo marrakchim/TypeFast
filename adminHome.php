@@ -28,6 +28,8 @@ if ($_SESSION['admin']) {
                   echo '</br>';
                   echo 'Login : ' .$user['login'];
                   echo '</br>';
+                  echo 'Admin : ' .$user['admin'];
+                  echo '</br>';
                   echo '</br>';
                 echo '</div>';
             }
@@ -39,7 +41,7 @@ if ($_SESSION['admin']) {
           echo '
           </div>
         </div>
-        <a href="register.php" class="text-dark"> Créer un nouvel utilisateur</a>        
+        <a href="register.php" class="text-dark"> Créer un nouvel utilisateur</a>
       </div>
     </div>
 

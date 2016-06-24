@@ -5,16 +5,15 @@ Class Match {
 
 public static $table_name = "match";
 
-public static function create($match_nbTry, $match_idUser, $match_idGame, $match_timePlay, $match_score){
+public static function create($match_idUser, $match_idGame){
 
 $var = R::dispense(Match::$table_name);
-$var->element_id = uniqid();
-$var->nbTry = $match_nbTry;
+$var->nbTry = 0;
 $var->idUser= $match_idUser;
 $var->idGame=$match_idGame;
-$var->idGame=$match_timePlay;
-$var->timePlay=$match_timePlay;
-$var->score=$match_score;
+$var->timeStart=  date('Y-m-d H:i:s'); // $match_timeStart;
+$var->timeEnd=-1;
+$var->score=0;
 //$theDate = date('Y-m-d H:i');
 //$var->user_date_register = $theDate;
 R::store( $var );

@@ -21,6 +21,8 @@ if(isset($_GET['action']) && $_GET['action']!= null)
     }
 
 }
+
+
 //Si l'action est de type POST
 if(isset($_POST['action']) && $_POST['action']!= null)
 {
@@ -33,6 +35,9 @@ if(isset($_POST['action']) && $_POST['action']!= null)
         break;
       case 'user_check':
         Controller::user_check();
+        break;
+      case 'game_startGame':
+        Controller::game_startGame();
         break;
     }
 
@@ -53,6 +58,16 @@ Class Controller{
         $resultA['status'] = "error";
         $resultA['response'] = $message;
         return json_encode($resultA);
+    }
+
+    public function game_startGame()
+    {
+       $resultat = Match::create($_POST['userID'],$_POST['matchID']);
+       if ($resultat != false) {
+           echo Controller::json_success($resultat);
+       }else {
+           echo Controller::json_error("Impossible de créer le match");
+       }
     }
 
 
