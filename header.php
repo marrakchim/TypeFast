@@ -6,7 +6,6 @@
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 
-	<title>Harmony - Free responsive Bootstrap admin template by Themestruck.com</title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -34,7 +33,7 @@
 
 
 	<div class="brand clearfix">
-		<a href="index.html" class="logo"><img src="img/logo.jpg" class="img-responsive" alt=""></a>
+		<a href="index.php" class="logo"><img src="img/logo.jpg" class="img-responsive" alt=""></a>
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
 			<li><a href="#">Help</a></li>
@@ -58,7 +57,7 @@
 					<input type="text" class="ts-sidebar-search" placeholder="Search here...">
 				</li>
 				<li class="ts-label">Main</li>
-				<li class="open"><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				<li class="open"><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 				<li><a href="#"><i class="fa fa-desktop"></i> UI Elements</a>
 					<ul>
 						<li><a href="panels.html">Panels and Wells</a></li>
@@ -87,7 +86,7 @@
 				<li><a href="#"><i class="fa fa-files-o"></i> Sample Pages</a>
 					<ul>
 						<li><a href="blank.html">Blank page</a></li>
-						<li><a href="login.html">Login page</a></li>
+						<li><a href="login.php">Login page</a></li>
 					</ul>
 				</li>
 

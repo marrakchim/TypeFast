@@ -5,10 +5,10 @@ require 'init.php';
 if (!isset($_SESSION['id'])){
 		header('location:login.php');
 }else {
-	/*	if ($_SESSION['admin']) {
-			header('location:index.php');
+		if ($_SESSION['admin']) {
+			header('location:adminHome.php');
 		}
-		else header('location:index.php'); */
+		else header('location:userHome.php');
 }
 
 

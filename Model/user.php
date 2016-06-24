@@ -18,7 +18,7 @@ public static function create($elemen_uuid, $user){
 		$var->prenom = $user['prenom'];
 		$var->mail = $user['mail'];
 
-	  $var->admin=0;
+	  $var->admin=$user['admin'];
 	  return R::store( $var );
 	}
 
@@ -31,7 +31,6 @@ $var[$elem_name]=$elem_value;
 R::store( $var );
 }
 }
-
 public static function getUserData($elemen_uuid, $elem_name){
 if (User::exists($elemen_uuid)){
 $var = User::findOneById($elemen_uuid);

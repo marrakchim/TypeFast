@@ -45,7 +45,7 @@ function manageLogin(){
 }
 
 
-function manageRegistration (){
+function manageRegistrationAdmin (){
 
     //Quand on clique sur le bouton du formulaire
     $('#registration').on('click', function(e) {
@@ -55,11 +55,12 @@ function manageRegistration (){
       nom = $("#nom").val();
       prenom = $("#prenom").val();
       mail = $("#mail").val();
+      admin = $('#admin').val();
 
       if (registrationFormChecking(login, password,password_check,nom, prenom, mail)) {
 
 
-          var data = {action:'user_registration', login:login, password:password,nom:nom,prenom:prenom,mail:mail};
+          var data = {action:'user_registration', login:login, password:password,nom:nom,prenom:prenom,mail:mail,admin:admin};
 
           request = $.ajax({
              url:'controller.php',
@@ -97,6 +98,61 @@ function manageRegistration (){
     });
 
 }
+
+function manageRegistration (){
+
+    //Quand on clique sur le bouton du formulaire
+    $('#registration').on('click', function(e) {
+      login = $("#login").val();
+      password = $("#password").val();
+      password_check = $("#password-check").val();
+      nom = $("#nom").val();
+      prenom = $("#prenom").val();
+      mail = $("#mail").val();
+
+      if (registrationFormChecking(login, password,password_check,nom, prenom, mail)) {
+
+
+          var data = {action:'user_registration', login:login, password:password,nom:nom,prenom:prenom,mail:mail,admin:0};
+
+          request = $.ajax({
+             url:'controller.php',
+             type: "POST",
+             data: data
+          });
+
+          request.done(function (response){
+            data = jQuery.parseJSON(response);
+            if (data.status === 'success'){
+                window.location.href = "login.php";
+            }else {
+                showError(response);
+            }
+
+          });
+
+          request.fail(function (status, thrown){
+              console.error(
+                  "Erreur d'execution de la requéte: "+
+                  status, thrown
+              );
+          });
+
+        }
+
+      });
+
+
+
+
+    $(".form-control").on('input',function(){
+      console.log("hide error");
+      hideError();
+    });
+
+}
+
+
 
 
 function showError (message){

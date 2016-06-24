@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -8,7 +10,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Harmony - Free responsive Bootstrap admin template by Themestruck.com</title>
+	<title>Connexion - TypeFast</title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -36,23 +38,23 @@
 
 <body>
 
-	<div class="login-page bk-img" style="background-image: url(img/login-bg.jpg);">
+	<div class="login-page bk-img" style="background-image: url(img/background.jpg);">
 		<div class="form-content">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3">
-						<h1 class="text-center text-bold text-light mt-4x">Connexion</h1>
+						<h1 class="text-center text-bold text-dark mt-4x">Connexion</h1>
 						<div class="well row pt-2x pb-3x bk-light">
 							<div class="col-md-8 col-md-offset-2">
-
 								<div id="errorDiv"></div>
+
 								<form>
 
-									<label for="" class="text-uppercase text-sm">Votre pseudo</label>
-									<input type="text" id="login" placeholder="Username" class="form-control mb">
+									<label for="" class="text-uppercase text-sm">Login</label>
+									<input type="text" id="login" placeholder="Login" class="form-control mb">
 
 									<label for="" class="text-uppercase text-sm">Mot de passe</label>
-									<input type="password" id="password" placeholder="Password" class="form-control mb">
+									<input type="password" id="password" placeholder="Mot de passe" class="form-control mb">
 
 									<button id="login-btn" class="btn btn-primary btn-block" type="button">Se connecter</button>
 
@@ -60,7 +62,7 @@
 							</div>
 						</div>
 						<div class="text-center text-light">
-							<a href="inscription.php" class="text-light"> Vous n'êtes pas inscrits ?</a>
+							<a href="register.php" class="text-dark"> Vous n'êtes pas inscrits ?</a>
 						</div>
 					</div>
 				</div>
@@ -82,10 +84,10 @@
 
 
 	<script>
-		$(function(){
-			manageLogin();
+				$(function(){
+						manageLogin();
 
-		});
+				});
 	</script>
 
 

@@ -58,12 +58,15 @@ Class Controller{
 
     public function user_registration()
     {
-      $data=[];
-      $data["login"]=$_POST['login'];
-      $data["password"]=$_POST['password'];
-      $data["nom"]=$_POST['nom'];
-      $data["prenom"]=$_POST['prenom'];
-      $data["mail"]=$_POST['mail'];
+      if(isset($_POST['login'])&&isset($_POST['password'])&&isset($_POST['nom'])&&isset($_POST['prenom'])&&isset($_POST['mail'])&&isset($_POST['admin']))
+      {
+        $data=[];
+        $data["login"]=$_POST['login'];
+        $data["password"]=$_POST['password'];
+        $data["nom"]=$_POST['nom'];
+        $data["prenom"]=$_POST['prenom'];
+        $data["mail"]=$_POST['mail'];
+        $data['admin']=$_POST['admin'];
 
 
       $result = User::create(null, $data);
@@ -71,6 +74,7 @@ Class Controller{
           echo Controller::json_success($result);
       }else {
           echo Controller::json_error("Impossible de créer le compte");
+      }
       }
     }
 
