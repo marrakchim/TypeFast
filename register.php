@@ -57,17 +57,18 @@ require 'init.php';
 									<div class="row" >
 										<div class="col-md-6 ">
 
+										<label for="" class="text-uppercase text-sm">Prénom</label>
+										<input type="text" id="prenom" placeholder="Prenom" class="form-control mb">
+
+										</div>
+										
+										<div class="col-md-6 ">
+
 										<label for="" class="text-uppercase text-sm">Nom</label>
 										<input type="text" id="nom" placeholder="Nom" class="form-control mb">
 
 										</div>
 
-										<div class="col-md-6 ">
-
-										<label for="" class="text-uppercase text-sm">Prénom</label>
-										<input type="text" id="prenom" placeholder="Prenom" class="form-control mb">
-
-										</div>
 									</div>
 
 									<label for="" class="text-uppercase text-sm">Adresse e-mail</label>

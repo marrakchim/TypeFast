@@ -1,5 +1,7 @@
 <?php
 
+header('Content-type: application/json');
+
 //Pour afficher les erreurs php
 ini_set('display_errors', -2);
 
@@ -39,7 +41,7 @@ if(isset($_POST['action']) && $_POST['action']!= null)
         Controller::user_check();
         break;
       case 'game_startGame':
-        Controller::game_startGame();
+        Controller::game_start_game();
         break;
     }
 
@@ -48,10 +50,10 @@ if(isset($_POST['action']) && $_POST['action']!= null)
 
 Class Controller{
 
-  
+
     /***********************************************************************************************/
 
-    public function game_startGame()
+    public function game_start_game()
     {
        $resultat = Match::create($_POST['userID'],$_POST['matchID']);
        if ($resultat != false) {
@@ -62,7 +64,16 @@ Class Controller{
     }
 
     public function game_get_list(){
-        
+      //Renvoyer les données sous format de tableau pas objets
+      //Manipulation plus évidente en js
+      $resultat=R::exportAll(Game::findAll_Games(),true);
+
+      if($resultat!=null)
+      {
+        echo Controller::json_success($resultat);
+      }
+      else  echo Controller::json_error("Pas de jeu");
+
     }
 
 
@@ -105,7 +116,7 @@ Class Controller{
               $_SESSION['admin']=  $user->admin;
               $_SESSION['login'] = $user->login;
               $_SESSION['password'] = $user->password;
-              $_SESSION['username'] = $user->nom." ".$user->prenom;
+              $_SESSION['username'] = $user->prenom." ".$user->nom;
               //header('Location: index.html');
               echo Controller::json_success($user);
               } catch (Exception $e) {
@@ -126,8 +137,26 @@ Class Controller{
         $resultA = [];
         $resultA['status'] = "success";
         $resultA['response'] = $result;
+
         return json_encode($resultA);
     }
+
+
+  /*      public function json_array_success($resultat){
+            $resultA = [];
+
+            if (!count($resultat)) die ('empty');
+            $array = array();
+            foreach ($resultat as $key => $bean) {
+            $array[] = json_decode($bean, true);
+            }
+
+            $resultA['status'] = "success";
+            $resultA['response'] = $array;
+
+            return json_encode($resultA);
+        }
+*/
 
     public function json_error($message){
         $resultA = [];

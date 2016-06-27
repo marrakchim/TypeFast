@@ -11,11 +11,8 @@ $var = R::dispense(Match::$table_name);
 $var->nbTry = 0;
 $var->idUser= $match_idUser;
 $var->idGame=$match_idGame;
-$var->timeStart=  date('Y-m-d H:i:s'); // $match_timeStart;
-$var->timeEnd=-1;
+$var->timeStart=  date('Y-m-d H:i:s');
 $var->score=0;
-//$theDate = date('Y-m-d H:i');
-//$var->user_date_register = $theDate;
 R::store( $var );
 
 
@@ -41,7 +38,7 @@ $var =  R::findOne(Match::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
 return $var;
 }
 
-public static function findAll_User(){
+public static function findAll_Matches(){
 return R::findAll(Match::$table_name);
 }
 

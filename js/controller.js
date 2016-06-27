@@ -1,3 +1,5 @@
+/***********************************************************************************************/
+
 function newGame(userID)
 {
   console.log("new game");
@@ -23,12 +25,41 @@ function newGame(userID)
   });
 }
 
+function get_game_list()
+{
+  var data = {action:'game_get_list'};
 
+  request = $.ajax({
+     url:'controller.php',
+     type: "GET",
+     data: data
+  });
 
+  request.done(function (response){
+    data=response;
+    //data = jQuery.parseJSON(response);
+    if (data.status === 'success'){
+        for(i=0;i<data.response.length; i++){
+          var opt = '<option>'+data.response[i].label+'</option>';
+          $('#choixJeu').append(opt);
+        }
+    }else if(data.status === 'error'){
+        $('#choixPartie').html("");
+        $('#choixPartie').append("Pas encore de jeux dans la base de données");
+    }
+
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requète: "+
+          status, thrown
+      );
+  });
+}
 
 function startGame(userID)
 {
-
       var data = {action:'game_startGame', userID:userID, matchID:1};
 
       request = $.ajax({
@@ -36,10 +67,9 @@ function startGame(userID)
          type: "POST",
          data: data
       });
-
-      
 }
 
+/***********************************************************************************************/
 
 function manageLogin(){
 
@@ -76,9 +106,7 @@ function manageLogin(){
               );
           });
       }
-
     });
-
 
     $(".form-control").on('input',function(){
       console.log("hide error");
@@ -99,8 +127,6 @@ function manageRegistration (){
       mail = $("#mail").val();
 
       if (registrationFormChecking(login, password,password_check,nom, prenom, mail)) {
-
-
           var data = {action:'user_registration', login:login, password:password,nom:nom,prenom:prenom,mail:mail,admin:0};
 
           request = $.ajax({
@@ -130,28 +156,14 @@ function manageRegistration (){
 
       });
 
-
-
-
     $(".form-control").on('input',function(){
-      console.log("hide error");
       hideError();
     });
 
 }
 
+/***********************************************************************************************/
 
-
-
-function showError (message){
-  var err = '<div class="alert alert-danger">'+message+'</div>';
-  $('#errorDiv').html(err);
-}
-
-function hideError (){
-  $('#errorDiv').html("");
-
-}
 
 function checkPassword(pass1,pass2){
 
@@ -228,12 +240,23 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
             }
             else{
               return true;
+              }
             }
           }
         }
       }
-      }
-
+    }
   }
 
-}
+  /***********************************************************************************************/
+
+
+  function showError (message){
+    var err = '<div class="alert alert-danger">'+message+'</div>';
+    $('#errorDiv').html(err);
+  }
+
+  function hideError (){
+    $('#errorDiv').html("");
+
+  }

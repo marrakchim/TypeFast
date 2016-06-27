@@ -48,7 +48,7 @@ if (!isset($_SESSION['id'])) {
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
 			<li class="ts-account">
-				<a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> <?php  echo $_SESSION['username']; ?> <i class="fa fa-angle-down hidden-side"></i></a>
+				<a href="#"><img src="img/ts-avatar.jpg" class="ts-avatar hidden-side" alt=""> <?php  echo $_SESSION['login']; ?> <i class="fa fa-angle-down hidden-side"></i></a>
 				<ul>
 					<li><a href="#">My Account</a></li>
 					<li><a href="logout.php">Logout</a></li>
@@ -100,5 +100,6 @@ if (!isset($_SESSION['id'])) {
 					</ul>
 				</li>
 			</ul>
+
 		</nav>
 		<?php endif; ?>

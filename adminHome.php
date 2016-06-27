@@ -5,19 +5,19 @@ include ('init.php');
 if ($_SESSION['admin']) {
 
 
-  include ('init.php');
   include ('header.php');
-  echo '<title>TypeFast - Administrateur</title>';
 
-  echo '
+  ?>
+  <title>TypeFast - Administrateur</title>
+
+
     <div class="content-wrapper">
       <div class="container-fluid">
 
         <div class="row">
           <div class="col-md-12">
-          TOUS LES UTILISATEURS
-            </br>';
-            $users=User::findAll_User();
+            </br>
+            <?php $users=User::findAll_User();
             foreach($users as $user){
                 echo '<div class="col-md-6" >';
                   echo 'Nom : ' .$user['nom'];
@@ -33,15 +33,11 @@ if ($_SESSION['admin']) {
                   echo '</br>';
                 echo '</div>';
             }
+            ?>
 
-            echo '
-
-            ';
-
-          echo '
           </div>
         </div>
-        <a href="register.php" class="text-dark"> Créer un nouvel utilisateur</a>
+        <a href="#" class="text-dark"> Créer un nouvel utilisateur</a>
       </div>
     </div>
 
@@ -55,8 +51,9 @@ if ($_SESSION['admin']) {
     <script src="js/fileinput.js"></script>
     <script src="js/chartData.js"></script>
     <script src="js/main.js"></script>
-  ';
+<?php
   }
+
   else
   {
     echo "Vous n'avez pas accès à cette page";

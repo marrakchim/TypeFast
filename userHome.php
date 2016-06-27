@@ -38,31 +38,28 @@ include ('header.php');
                   <div class="text-center text-dark">
                   <div class="jumbotron">
                     <h1>Bienvenue !</h1>
-                    <p>Veuillez choisir une partie </p>
+                      <div id="choixPartie">
+                        <p>Veuillez choisir une partie </p>
 
-                    <div class="hr-dashed"></div>
-                    <div class="form-group">
-                      <div class="col-sm-8">
-                        <select class="form-control">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
+                        <div class="hr-dashed"></div>
+                        <div class="form-group">
+                          <div class="col-sm-8">
+                            <select id="choixJeu" class="form-control">
+
+                            </select>
+                          </div>
+                          <div class="col-sm-4">
+                             <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
+                          </div>
+                        </div>
+                         <br>
                       </div>
-                      <div class="col-sm-4">
-                         <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
-                      </div>  
-                    </div>
-                     <br>
-
                   </div>
                   </div>
                 </div>
             </div>
           </div>
-        </div>  
+        </div>
 
     </div>
   </div>
@@ -82,9 +79,6 @@ include ('header.php');
 
   <script>
     $(function(){
-
-      userID = <?php echo $_SESSION['id']; ?>;
-
       //newGame(userID);
 
       //startGame(userID);
@@ -93,6 +87,7 @@ include ('header.php');
       get_game_list();
 
 
+//Gestion du pop up
         $('#newGame').on('click', function(){
               close_popup();
         });
