@@ -33,7 +33,7 @@ return $var[$elem_name];
 }
 
 public static function findOneById($elemen_uuid){
-$var =  R::findOne(Game::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
+$var =  R::findOne(Game::$table_name , ' id = ? ', [ $elemen_uuid ] );
 return $var;
 }
 
@@ -42,7 +42,7 @@ return R::findAll(Game::$table_name);
 }
 
 public static function exists($elemen_uuid){
-$var =  R::findOne(Game::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
+$var =  R::findOne(Game::$table_name , ' id = ? ', [ $elemen_uuid ] );
 return $var != NULL;
 }
 

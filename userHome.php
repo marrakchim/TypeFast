@@ -20,9 +20,10 @@ include ('header.php');
         <div class="row">
 
           <div class="col-md-12">
+              <div id="jeu">
 
-              THIS IS THE GAME
-
+              </div>
+              <div id="timer"></div>
           </div>
 
 
@@ -73,23 +74,24 @@ include ('header.php');
   <script src="js/Chart.min.js"></script>
   <script src="js/fileinput.js"></script>
   <script src="js/chartData.js"></script>
+  <script src="js/kinetic-v5.1.0.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/timer.jquery.js"></script>
   <script src="js/controller.js"></script>
 
 
   <script>
     $(function(){
-      //newGame(userID);
 
-      //startGame(userID);
-
-      // loading end : fonction : appel controlleur.php -> games.php
-      get_game_list();
+      // end loading -> fonction : appel controlleur.php -> games.php
+      getGameList();
 
 
 //Gestion du pop up
         $('#newGame').on('click', function(){
               close_popup();
+              startGame(<?php echo $_SESSION['id']; ?>);
+              handleTimer();
         });
 
     });
@@ -100,7 +102,6 @@ include ('header.php');
     }
 
   </script>
-
 
 
 <?php

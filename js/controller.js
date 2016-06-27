@@ -1,31 +1,28 @@
-/***********************************************************************************************/
-
-function newGame(userID)
-{
-  console.log("new game");
-  $('#newGame').on('click', function(e) {
-
-    console.log("click"+userID);
 
 
-    $.get("controller.php",function(data,status){
-      console.log(data);
-      alert( "Data Loaded: " + data + "Status: " + status );
-    });
+function handleTimer() {
 
-    var data = {action:'game_newGame'};
+  $("#timer").timer({
+        duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+        callback:   function() {  // This will execute after the duration has elapsed
+        console.log('Time up!');
+        },                        // If duration is set, this function is called after `duration` has elapsed
+        repeat:     true,     // If duration is set, `callback` will be called repeatedly
+        format:    '%M:%S'    // Format to show time in
+      });
+      $("#div-id").timer('pause');
+      $("#div-id").timer('resume');
 
-    request = $.ajax({
-       url:'controller.php',
-       type: "GET",
-       data: data
-    });
+      console.log($('#timer').data('state') );
 
 
-  });
 }
 
-function get_game_list()
+
+
+/***********************************************************************************************/
+
+function getGameList()
 {
   var data = {action:'game_get_list'};
 
@@ -39,8 +36,9 @@ function get_game_list()
     data=response;
     //data = jQuery.parseJSON(response);
     if (data.status === 'success'){
+       $('#choixJeu').html("");
         for(i=0;i<data.response.length; i++){
-          var opt = '<option>'+data.response[i].label+'</option>';
+          var opt = '<option data-uuid="'+data.response[i].id+'">'+data.response[i].label+'</option>';
           $('#choixJeu').append(opt);
         }
     }else if(data.status === 'error'){
@@ -60,12 +58,33 @@ function get_game_list()
 
 function startGame(userID)
 {
-      var data = {action:'game_startGame', userID:userID, matchID:1};
+      var selection = $("#choixJeu").find(":selected").data("uuid");
+      var data = {action:'game_start_game', userID:userID, matchID:selection};
 
       request = $.ajax({
          url:'controller.php',
          type: "POST",
          data: data
+      });
+
+      request.done(function (data){
+        if (data.status === 'success'){
+              convert('jeu', data.response.text);
+              var input = '<textarea></textarea>';
+              $("#jeu").append(input);
+
+        }else if(data.status === 'error'){
+            $("#jeu").html("");
+            $('#jeu').append("Error : couldn't retrieve information");
+        }
+
+      });
+
+      request.fail(function (status, thrown){
+          console.error(
+              "Erreur d'execution de la requète: "+
+              status, thrown
+          );
       });
 }
 
@@ -258,5 +277,37 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
 
   function hideError (){
     $('#errorDiv').html("");
+  }
+
+  function convert(element, text)
+  {
+    var size=text.length;
+    var textOnCanvas = new Kinetic.Text({
+      x: 0,
+      y: 0,
+      fill: '#000000',
+      width:400,
+      fontFamily: "Arial",
+      fontSize: 14,
+      fill: '#000000',
+      align: 'left',
+      padding: 5,
+      text: text
+    });
+
+    var twidth = textOnCanvas.getWidth();
+    var theight = textOnCanvas.getHeight();
+
+    var stage = new Kinetic.Stage({
+        container: element,
+        width:twidth,
+        height:theight,
+      });
+    var layer = new Kinetic.Layer();
+
+    layer.add(textOnCanvas);
+    stage.add(layer);
+
+    layer.draw();
 
   }

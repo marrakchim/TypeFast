@@ -13,7 +13,7 @@ $var->idUser= $match_idUser;
 $var->idGame=$match_idGame;
 $var->timeStart=  date('Y-m-d H:i:s');
 $var->score=0;
-R::store( $var );
+return R::store( $var );
 
 
 }
@@ -34,7 +34,7 @@ return $var[$elem_name];
 }
 
 public static function findOneById($elemen_uuid){
-$var =  R::findOne(Match::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
+$var =  R::findOne(Match::$table_name , ' id = ? ', [ $elemen_uuid ] );
 return $var;
 }
 
@@ -43,7 +43,7 @@ return R::findAll(Match::$table_name);
 }
 
 public static function exists($elemen_uuid){
-$var =  R::findOne(Match::$table_name , ' element_id = ? ', [ $elemen_uuid ] );
+$var =  R::findOne(Match::$table_name , ' id = ? ', [ $elemen_uuid ] );
 return $var != NULL;
 }
 

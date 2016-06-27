@@ -40,7 +40,7 @@ if(isset($_POST['action']) && $_POST['action']!= null)
       case 'user_check':
         Controller::user_check();
         break;
-      case 'game_startGame':
+      case 'game_start_game':
         Controller::game_start_game();
         break;
     }
@@ -55,9 +55,13 @@ Class Controller{
 
     public function game_start_game()
     {
+
        $resultat = Match::create($_POST['userID'],$_POST['matchID']);
+       $game = Game::findOneById($_POST['matchID']);
+       //var_dump($resultat);
+
        if ($resultat != false) {
-           echo Controller::json_success($resultat);
+           echo Controller::json_success($game);
        }else {
            echo Controller::json_error("Impossible de créer le match");
        }
