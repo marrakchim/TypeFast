@@ -1,6 +1,5 @@
 <?php
 
-
 Class Match {
 
 public static $table_name = "match";
@@ -13,12 +12,13 @@ $var->idUser= $match_idUser;
 $var->idGame=$match_idGame;
 $var->timeStart=  date('Y-m-d H:i:s');
 $var->score=0;
-return R::store( $var );
-
-
+$var->timePlayed=300;
+$var->timeEnd=-1;
+ R::store( $var );
+return $var->id;
 }
 
-public static function setUserData($elemen_uuid, $elem_name, $elem_value){
+public static function setMatchData($elemen_uuid, $elem_name, $elem_value){
 if (Match::exists($elemen_uuid)){
 $var = Match::findOneById($elemen_uuid);
 $var[$elem_name]=$elem_value;
@@ -26,7 +26,7 @@ R::store( $var );
 }
 }
 
-public static function getUserData($elemen_uuid, $elem_name){
+public static function getMatchData($elemen_uuid, $elem_name){
 if (Match::exists($elemen_uuid)){
 $var = Match::findOneById($elemen_uuid);
 return $var[$elem_name];

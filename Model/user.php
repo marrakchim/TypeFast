@@ -19,7 +19,8 @@ public static function create($elemen_uuid, $user){
 		$var->mail = $user['mail'];
 
 	  $var->admin=$user['admin'];
-	  return R::store( $var );
+	  R::store( $var );
+		return $var;
 	}
 
 }

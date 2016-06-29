@@ -17,9 +17,24 @@
 
 .popup .modal-pop{
 
-	
+
 }
 
+body
+{
+	background-color: #edfcf7;
+}
+
+#buttonCheck
+{
+	background-color:#37a6c4;
+}
+
+#timer
+{
+	font-family: "roboto light";
+	font-size:16;
+}
 
 
 .showMe {

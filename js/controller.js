@@ -1,24 +1,49 @@
 
+function updateMatchInfo() {
+  var timeEnd = timeNow();
+  var timePlayed = 300 - $("#timer").data('seconds');
+  var data = {action:'match_update_info',time_played:timePlayed};
+  console.log(data);
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "POST",
+     data: data
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+      console.log(data.status);
+    }else if(data.status === 'error'){
+        console.log(data.status);
+        console.log(data.response);
+    }
+
+  });
+
+  request.fail(function (xhr, ajaxOptions, thrownError){
+    alert("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
+  });
+
+}
+
+
+/***********************************************************************************************/
 
 function handleTimer() {
 
   $("#timer").timer({
         duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
-        console.log('Time up!');
+          alert('Time up!');
+          $("#timer").html("");
+          $("#timer").append("Temps écoulé.");
         },                        // If duration is set, this function is called after `duration` has elapsed
-        repeat:     true,     // If duration is set, `callback` will be called repeatedly
+        countdown: true,
+        repeat:     false,     // If duration is set, `callback` will be called repeatedly
         format:    '%M:%S'    // Format to show time in
       });
-      $("#div-id").timer('pause');
-      $("#div-id").timer('resume');
-
-      console.log($('#timer').data('state') );
-
-
 }
-
-
 
 /***********************************************************************************************/
 
@@ -29,11 +54,10 @@ function getGameList()
   request = $.ajax({
      url:'controller.php',
      type: "GET",
-     data: data
+     data: data,
   });
 
-  request.done(function (response){
-    data=response;
+  request.done(function (data){
     //data = jQuery.parseJSON(response);
     if (data.status === 'success'){
        $('#choixJeu').html("");
@@ -50,16 +74,16 @@ function getGameList()
 
   request.fail(function (status, thrown){
       console.error(
-          "Erreur d'execution de la requète: "+
+          "Erreur d'execution de la requête: "+
           status, thrown
       );
   });
 }
 
-function startGame(userID)
+function startGame()
 {
       var selection = $("#choixJeu").find(":selected").data("uuid");
-      var data = {action:'game_start_game', userID:userID, matchID:selection};
+      var data = {action:'game_start_game', gameID:selection};
 
       request = $.ajax({
          url:'controller.php',
@@ -68,10 +92,14 @@ function startGame(userID)
       });
 
       request.done(function (data){
+        //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
               convert('jeu', data.response.text);
-              var input = '<textarea></textarea>';
+              var input = '<textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>';
+              var but = '<button id="buttonCheck" class="btn btn-success mt-2x">Verifier</button'
               $("#jeu").append(input);
+              $("#jeu").append(but);
+              refresh_button_event($("#buttonCheck"));
 
         }else if(data.status === 'error'){
             $("#jeu").html("");
@@ -80,12 +108,22 @@ function startGame(userID)
 
       });
 
-      request.fail(function (status, thrown){
-          console.error(
-              "Erreur d'execution de la requète: "+
-              status, thrown
-          );
+      request.fail(function (xhr, ajaxOptions, thrownError){
+        alert(xhr.statusText);
+        alert(xhr.responseText);
+        alert(xhr.status);
+        alert(thrownError);
       });
+
+
+}
+
+function refresh_button_event(element)
+{
+    element.on('click', function(){
+      updateMatchInfo();
+      console.log('click');
+    });
 }
 
 /***********************************************************************************************/
@@ -106,9 +144,7 @@ function manageLogin(){
              data: data
           });
 
-          request.done(function (response){
-              console.log(response);
-            data = jQuery.parseJSON(response);
+          request.done(function (data){
             if (data.status === 'success'){
                 window.location.href  = "index.php";
                 console.log(data.response);
@@ -120,7 +156,7 @@ function manageLogin(){
 
           request.fail(function (status, thrown){
               console.error(
-                  "Erreur d'execution de la requète: "+
+                  "Erreur d'execution de la requête: "+
                   status, thrown
               );
           });
@@ -154,8 +190,7 @@ function manageRegistration (){
              data: data
           });
 
-          request.done(function (response){
-            data = jQuery.parseJSON(response);
+          request.done(function (data){
             if (data.status === 'success'){
                 window.location.href = "login.php";
             }else {
@@ -166,7 +201,7 @@ function manageRegistration (){
 
           request.fail(function (status, thrown){
               console.error(
-                  "Erreur d'execution de la requéte: "+
+                  "Erreur d'execution de la requête: "+
                   status, thrown
               );
           });
@@ -287,11 +322,11 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
       y: 0,
       fill: '#000000',
       width:400,
-      fontFamily: "Arial",
-      fontSize: 14,
+      fontFamily: "roboto light",
+      fontSize: 16,
       fill: '#000000',
       align: 'left',
-      padding: 5,
+      padding: 10,
       text: text
     });
 
@@ -310,4 +345,20 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
 
     layer.draw();
 
+  }
+
+  function timeNow(){
+      var now= new Date(),
+      ampm= 'am',
+      h= now.getHours(),
+      m= now.getMinutes(),
+      s= now.getSeconds();
+      if(h>= 12){
+          if(h>12) h -= 12;
+          ampm= 'pm';
+      }
+
+      if(m<10) m= '0'+m;
+      if(s<10) s= '0'+s;
+      return (now.toLocaleDateString()+ ' ' + h + ':' + m + ':' + s + ' ' + ampm);
   }

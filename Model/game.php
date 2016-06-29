@@ -12,12 +12,10 @@ public static function create($label, $game_text){
 	$var->text = $game_text;
 	$var->status = 0;
 	$var->difficulty = 0;
-	//$theDate = date('Y-m-d H:i');
-	//$var->user_date_register = $theDate;
-	R::store( $var );
+	return R::store( $var );
 }
 
-public static function setUserData($elemen_uuid, $elem_name, $elem_value){
+public static function setGameData($elemen_uuid, $elem_name, $elem_value){
 if (Game::exists($elemen_uuid)){
 $var = Game::findOneById($elemen_uuid);
 $var[$elem_name]=$elem_value;
@@ -25,7 +23,7 @@ R::store( $var );
 }
 }
 
-public static function getUserData($elemen_uuid, $elem_name){
+public static function getGameData($elemen_uuid, $elem_name){
 if (Game::exists($elemen_uuid)){
 $var = Game::findOneById($elemen_uuid);
 return $var[$elem_name];

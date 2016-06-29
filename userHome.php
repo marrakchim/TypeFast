@@ -2,31 +2,23 @@
 
 include ('init.php');
 
-
 if (!$_SESSION['admin']) {
-
-
-include ('header.php');
-
-
-
+  include ('header.php');
 ?>
 
 <title>TypeFast - <?php echo $_SESSION['login']; ?> </title>
 
-  <div class="content-wrapper">
+  <div id="container-general" class="content-wrapper">
     <div class="container-fluid">
 
         <div class="row">
 
-          <div class="col-md-12">
-              <div id="jeu">
-
+          <div class="col-md-8 col-md-offset-2">
+              <div id="container-jeu" class="col-md-8 pt-3x pb-1x">
+                <div id="timer" class="text-center text-dark"></div>
+                <div id="jeu" class="pt-2x pb-2x text-center"></div>
               </div>
-              <div id="timer"></div>
           </div>
-
-
         </div>
 
 
@@ -86,13 +78,14 @@ include ('header.php');
       // end loading -> fonction : appel controlleur.php -> games.php
       getGameList();
 
-
 //Gestion du pop up
         $('#newGame').on('click', function(){
               close_popup();
-              startGame(<?php echo $_SESSION['id']; ?>);
+              startGame();
               handleTimer();
+              //updateMatchInfo();
         });
+
 
     });
 
@@ -100,6 +93,8 @@ include ('header.php');
     function close_popup(){
         Pblock = $('#popup-view').removeClass('showMe');
     }
+
+
 
   </script>
 

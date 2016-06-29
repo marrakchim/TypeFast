@@ -43,6 +43,9 @@ if(isset($_POST['action']) && $_POST['action']!= null)
       case 'game_start_game':
         Controller::game_start_game();
         break;
+      case 'match_update_info':
+        Controller::match_update_info();
+        break;
     }
 
 }
@@ -56,15 +59,17 @@ Class Controller{
     public function game_start_game()
     {
 
-       $resultat = Match::create($_POST['userID'],$_POST['matchID']);
-       $game = Game::findOneById($_POST['matchID']);
-       //var_dump($resultat);
+       $match = Match::create($_SESSION['id'],$_POST['gameID']);
+       $game = Game::findOneById($_POST['gameID']);
 
-       if ($resultat != false) {
+       if ($match != null) {
+           $_SESSION['matchID'] = $match;
+           $_SESSION['gameID']=$_POST['gameID'];
            echo Controller::json_success($game);
        }else {
            echo Controller::json_error("Impossible de créer le match");
        }
+
     }
 
     public function game_get_list(){
@@ -77,6 +82,33 @@ Class Controller{
         echo Controller::json_success($resultat);
       }
       else  echo Controller::json_error("Pas de jeu");
+
+    }
+    /***********************************************************************************************/
+
+    public function match_update_info()
+    {
+      $resultat = Match::findOneById($_SESSION['matchID']);
+
+      //echo $_POST['time_played'];
+
+      if(isset ($_POST['time_played'])) {
+        if($resultat!=null)
+        {
+          //echo $resultat->id;
+          //echo $_POST['time_played'];
+
+          Match::setMatchData($resultat->id,"timeEnd", date('Y-m-d H:i:s'));
+          Match::setMatchData($resultat->id,"timePlayed",$_POST['time_played']);
+          if($resultat->nbTry<3)
+          Match::setMatchData($resultat->id,"nbTry",$resultat->nbTry+1);
+          $resultat = Match::findOneById($_SESSION['matchID']);
+          echo Controller::json_success($resultat);
+        }
+
+        else  echo Controller::json_error("Pas de jeu");
+    }
+    else echo Controller::json_error("Erreur isset");
 
     }
 
@@ -121,7 +153,6 @@ Class Controller{
               $_SESSION['login'] = $user->login;
               $_SESSION['password'] = $user->password;
               $_SESSION['username'] = $user->prenom." ".$user->nom;
-              //header('Location: index.html');
               echo Controller::json_success($user);
               } catch (Exception $e) {
               echo Controller::json_error("Impossible de se connecter");
@@ -129,9 +160,7 @@ Class Controller{
           }else {
               echo Controller::json_error("Login ou mot de passe incorrect");
           }
-
       }
-
     }
 
     /*************************************************************************************************/
@@ -145,32 +174,12 @@ Class Controller{
         return json_encode($resultA);
     }
 
-
-  /*      public function json_array_success($resultat){
-            $resultA = [];
-
-            if (!count($resultat)) die ('empty');
-            $array = array();
-            foreach ($resultat as $key => $bean) {
-            $array[] = json_decode($bean, true);
-            }
-
-            $resultA['status'] = "success";
-            $resultA['response'] = $array;
-
-            return json_encode($resultA);
-        }
-*/
-
     public function json_error($message){
         $resultA = [];
         $resultA['status'] = "error";
         $resultA['response'] = $message;
         return json_encode($resultA);
     }
-
-
-
 }
 
 ?>
