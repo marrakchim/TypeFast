@@ -22,6 +22,9 @@ if(isset($_GET['action']) && $_GET['action']!= null)
         case 'game_get_list':
           Controller::game_get_list();
           break;
+        case 'game_get_text':
+          Controller::game_get_text();
+          break;
     }
 
 }
@@ -55,6 +58,16 @@ Class Controller{
 
 
     /***********************************************************************************************/
+
+    public function game_get_text()
+    {
+      $resultat = Game::findOneById($_SESSION['gameID']);
+      if($resultat != null) {
+        echo Controller::json_success($resultat);
+      }
+      else echo Controller::json_error("Impossible de récupérer le texte");
+
+    }
 
     public function game_start_game()
     {

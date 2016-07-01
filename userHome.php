@@ -13,15 +13,15 @@ if (!$_SESSION['admin']) {
 
         <div class="row">
 
+
           <div class="col-md-8 col-md-offset-2">
               <div id="container-jeu" class="col-md-8 pt-3x pb-1x">
+                <div id="errorDiv"></div>
                 <div id="timer" class="text-center text-dark"></div>
                 <div id="jeu" class="pt-2x pb-2x text-center"></div>
               </div>
           </div>
         </div>
-
-
 
         <div id="popup-view" class="popup showMe">
           <div class="overflow"></div>
@@ -83,10 +83,7 @@ if (!$_SESSION['admin']) {
               close_popup();
               startGame();
               handleTimer();
-              //updateMatchInfo();
         });
-
-
     });
 
 
@@ -94,10 +91,7 @@ if (!$_SESSION['admin']) {
         Pblock = $('#popup-view').removeClass('showMe');
     }
 
-
-
   </script>
-
 
 <?php
 

@@ -1,3 +1,69 @@
+function calculateScore()
+{
+  // Max 100 points
+  // -0.5 par faute = texte pas pareil ou mot manquant
+  var data = {action:'game_get_text'};
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "GET",
+     data: data,
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+       console.log(data.response);
+       var textInput = $("#textInput").val();
+       //verifier que l'input n'est pas vide
+       if(textInput == "") showError("Veuillez entrer du texte");
+       else
+       console.log("number of differences : " + countDifferences(textInput,data.response.text," "));
+        }
+    else if(data.status === 'error'){
+        console.log(data.status);
+    }
+
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requête: "+
+          status, thrown
+      );
+  });
+}
+
+function countDifferences(a,b, separator)
+{
+  a = a.replace(/\s+/g, " ");
+  var arrayA = a.split(separator);
+  var arrayB = b.split(separator);
+
+  var count;
+  var nbDifferences = 0;
+  if(arrayA.length <= arrayB.length)
+  {
+    count = arrayA.length;
+    nbDifferences = arrayB.length-arrayA.length;
+  }
+  else
+  {
+    count = arrayB.length;
+    nbDifferences = arrayA.length-arrayB.length;
+  }
+
+  for (var i=0; i < count; i++)
+  {
+    if(arrayA[i] != arrayB[i])
+    {
+      console.log(arrayA[i] + " est different de " + arrayB[i]);
+      nbDifferences ++;
+    }
+  }
+  return nbDifferences;
+}
+
+/***********************************************************************************************/
 
 function updateMatchInfo() {
   var timeEnd = timeNow();
@@ -122,7 +188,7 @@ function refresh_button_event(element)
 {
     element.on('click', function(){
       updateMatchInfo();
-      console.log('click');
+      calculateScore();
     });
 }
 
