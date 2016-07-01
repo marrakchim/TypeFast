@@ -1,4 +1,4 @@
-function calculateScore()
+function compareText()
 {
   // Max 100 points
   // -0.5 par faute = texte pas pareil ou mot manquant
@@ -15,10 +15,20 @@ function calculateScore()
        console.log(data.response);
        var textInput = $("#textInput").val();
        //verifier que l'input n'est pas vide
-       if(textInput == "") showError("Veuillez entrer du texte");
+       if(textInput == "")
+       {
+         showError("Veuillez entrer du texte");
+         $("#textInput").on('input',function(){
+           hideError();
+         });
+       }
        else
-       console.log("number of differences : " + countDifferences(textInput,data.response.text," "));
-        }
+       {
+         var score = calculateScore(countDifferences(textInput,data.response.text," "));
+         console.log(score);
+         updateMatchInfo(score);
+       }
+    }
     else if(data.status === 'error'){
         console.log(data.status);
     }
@@ -31,6 +41,15 @@ function calculateScore()
           status, thrown
       );
   });
+}
+
+
+
+function calculateScore(nbDifferences)
+{
+  var score=100 - nbDifferences*0.5;
+  if(score<0) score=0;
+  return score;
 }
 
 function countDifferences(a,b, separator)
@@ -56,7 +75,6 @@ function countDifferences(a,b, separator)
   {
     if(arrayA[i] != arrayB[i])
     {
-      console.log(arrayA[i] + " est different de " + arrayB[i]);
       nbDifferences ++;
     }
   }
@@ -65,10 +83,10 @@ function countDifferences(a,b, separator)
 
 /***********************************************************************************************/
 
-function updateMatchInfo() {
+function updateMatchInfo(score) {
   var timeEnd = timeNow();
   var timePlayed = 300 - $("#timer").data('seconds');
-  var data = {action:'match_update_info',time_played:timePlayed};
+  var data = {action:'match_update_info',time_played:timePlayed,score:score};
   console.log(data);
 
   request = $.ajax({
@@ -79,10 +97,7 @@ function updateMatchInfo() {
 
   request.done(function (data){
     if (data.status === 'success'){
-      console.log(data.status);
     }else if(data.status === 'error'){
-        console.log(data.status);
-        console.log(data.response);
     }
 
   });
@@ -187,8 +202,7 @@ function startGame()
 function refresh_button_event(element)
 {
     element.on('click', function(){
-      updateMatchInfo();
-      calculateScore();
+      compareText();
     });
 }
 

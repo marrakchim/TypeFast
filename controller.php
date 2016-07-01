@@ -103,16 +103,13 @@ Class Controller{
     {
       $resultat = Match::findOneById($_SESSION['matchID']);
 
-      //echo $_POST['time_played'];
 
       if(isset ($_POST['time_played'])) {
         if($resultat!=null)
         {
-          //echo $resultat->id;
-          //echo $_POST['time_played'];
-
           Match::setMatchData($resultat->id,"timeEnd", date('Y-m-d H:i:s'));
           Match::setMatchData($resultat->id,"timePlayed",$_POST['time_played']);
+          Match::setMatchData($resultat->id,"score",$_POST['score']);
           if($resultat->nbTry<3)
           Match::setMatchData($resultat->id,"nbTry",$resultat->nbTry+1);
           $resultat = Match::findOneById($_SESSION['matchID']);
