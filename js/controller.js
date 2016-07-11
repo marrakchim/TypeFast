@@ -1,3 +1,37 @@
+function adminNewGame()
+{
+  var label = $('#inputLabelAdmin').val();
+  var texte = $('#inputTextAdmin').val();
+  var selection = $("#diff").find(":selected").data("id");
+
+  var data = {action : 'game_new_game', texte:texte, label:label,difficulty:selection};
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "POST",
+     data: data,
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+       console.log(data.status);
+      }
+    else if(data.status === 'error'){
+        console.log(data.response);
+    }
+
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requête: "+
+          status, thrown
+      );
+  });
+}
+
+/***********************************************************************************************/
+
 function compareText()
 {
   // Max 100 points

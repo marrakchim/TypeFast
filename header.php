@@ -79,7 +79,7 @@ if (!isset($_SESSION['id'])) {
 					</ul>
 				</li>
 				<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
-				<li><a href="forms.html"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
+				<li><a href="newText.php"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
 				<li><a href="charts.html"><i class="fa fa-pie-chart"></i> Charts</a></li>
 				<li><a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown</a>
 					<ul>

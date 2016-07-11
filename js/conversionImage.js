@@ -1,18 +1,18 @@
 
 
-$('#textInput').on('click', function() {
+$('#inputTextAdmin').on('click', function() {
 
-  if($('#textInput').size()!=0){
-      document.getElementById('textInput').addEventListener('keyup', function (){
-        convert();
+  if($('#inputTextAdmin').size()!=0){
+      document.getElementById('inputTextAdmin').addEventListener('keyup', function (){
+        convertAdmin();
       });
 }
   });
 
 
-function convert()
+function convertAdmin()
 {
-  var size=$('#textInput').size();
+  var size=$('#inputTextAdmin').size();
   console.log(size);
 
   var textOnCanvas = new Kinetic.Text({
@@ -25,7 +25,7 @@ function convert()
     fill: '#000000',
     align: 'left',
     padding: 5,
-    text: document.getElementById('textInput').value
+    text: document.getElementById('inputTextAdmin').value
   });
 
   var twidth = textOnCanvas.getWidth();

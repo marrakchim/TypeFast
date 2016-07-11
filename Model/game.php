@@ -5,13 +5,13 @@ Class Game {
 
 public static $table_name = "game";
 
-public static function create($label, $game_text){
+public static function create($label, $game_text,$game_difficulty){
 
 	$var = R::dispense(Game::$table_name);
 	$var->label = $label;
 	$var->text = $game_text;
 	$var->status = 0;
-	$var->difficulty = 0;
+	$var->difficulty = $game_difficulty;
 	return R::store( $var );
 }
 

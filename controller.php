@@ -49,6 +49,10 @@ if(isset($_POST['action']) && $_POST['action']!= null)
       case 'match_update_info':
         Controller::match_update_info();
         break;
+      case 'game_new_game':
+        Controller::game_new_game();
+        break;
+
     }
 
 }
@@ -58,6 +62,20 @@ Class Controller{
 
 
     /***********************************************************************************************/
+
+    public function game_new_game()
+    {
+      $label = $_POST['label'];
+      $texte = $_POST['texte'];
+      $difficulty = $_POST['difficulty'];
+      $game=Game::create($label,$texte,$difficulty);
+
+      if($game!=null)
+      {
+        echo Controller::json_success($game);
+      }
+      else echo Controller::json_error("Impossible de créer le jeu");
+    }
 
     public function game_get_text()
     {
