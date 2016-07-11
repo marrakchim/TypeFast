@@ -27,6 +27,9 @@ function compareText()
          var score = calculateScore(countDifferences(textInput,data.response.text," "));
          console.log(score);
          updateMatchInfo(score);
+         //afficher le score sur la page
+         $("#score").html(score);
+
        }
     }
     else if(data.status === 'error'){
@@ -119,6 +122,7 @@ function handleTimer() {
           alert('Time up!');
           $("#timer").html("");
           $("#timer").append("Temps écoulé.");
+          document.location.href="userHome.php"
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
         repeat:     false,     // If duration is set, `callback` will be called repeatedly
@@ -165,6 +169,7 @@ function startGame()
 {
       var selection = $("#choixJeu").find(":selected").data("uuid");
       var data = {action:'game_start_game', gameID:selection};
+      $("#temps").show();
 
       request = $.ajax({
          url:'controller.php',
@@ -181,11 +186,13 @@ function startGame()
               $("#jeu").append(input);
               $("#jeu").append(but);
               refresh_button_event($("#buttonCheck"));
-
-        }else if(data.status === 'error'){
-            $("#jeu").html("");
-            $('#jeu').append("Error : couldn't retrieve information");
         }
+        else if(data.status === 'error'){
+            $("#container-jeu").html("");
+            $('#container-jeu').append(data.response);
+        }
+
+
 
       });
 
@@ -203,6 +210,8 @@ function refresh_button_event(element)
 {
     element.on('click', function(){
       compareText();
+      $("#popup-score").addClass("showMe");
+      $("#container-jeu").hide();
     });
 }
 

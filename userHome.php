@@ -11,12 +11,28 @@ if (!$_SESSION['admin']) {
   <div id="container-general" class="content-wrapper">
     <div class="container-fluid">
 
+        <div id="popup-score" class="popup">
+          <div class="overflow"></div>
+          <div class="row modal-pop">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="well row pt-3x pb-1x bk-light">
+                  <div class="text-center text-dark">
+                  <div class="jumbotron">
+                    <p>Partie terminée</p>
+                    <div id="score"></div>
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
         <div class="row">
-
-
           <div class="col-md-8 col-md-offset-2">
               <div id="container-jeu" class="col-md-8 pt-3x pb-1x">
                 <div id="errorDiv"></div>
+                <div id="temps">Temps restant : </div>
                 <div id="timer" class="text-center text-dark"></div>
                 <div id="jeu" class="pt-2x pb-2x text-center"></div>
               </div>
@@ -77,6 +93,7 @@ if (!$_SESSION['admin']) {
 
       // end loading -> fonction : appel controlleur.php -> games.php
       getGameList();
+      $("#temps").hide();
 
 //Gestion du pop up
         $('#newGame').on('click', function(){

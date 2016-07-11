@@ -71,17 +71,59 @@ Class Controller{
 
     public function game_start_game()
     {
+      //Dans tous les cas
+      $game = Game::findOneById($_POST['gameID']);
+      $resultat=Match::getMatchData($_SESSION['matchID'],"nbTry");
 
-       $match = Match::create($_SESSION['id'],$_POST['gameID']);
-       $game = Game::findOneById($_POST['gameID']);
+      //Si on ne vient pas de se connecter
+      //Si on a déjà joué avant
+      if($_SESSION['matchID']!=null)
+      {
 
-       if ($match != null) {
-           $_SESSION['matchID'] = $match;
-           $_SESSION['gameID']=$_POST['gameID'];
-           echo Controller::json_success($game);
-       }else {
-           echo Controller::json_error("Impossible de créer le match");
-       }
+
+        if ($resultat<3) {
+
+          $match = Match::create($_SESSION['id'],$_POST['gameID']);
+
+          $_SESSION['matchID'] = $match;
+          $_SESSION['gameID']=$_POST['gameID'];
+
+          Match::setMatchData($match,"nbTry",$resultat+1);
+          echo Controller::json_success($game);
+          }
+          else if($resultat==3){
+            //Si la difference entre les 2 matchs > 2h il peut rejouer
+            // date à tester :
+            $now = "2016-07-10 13:52:00";//date('Y-m-d H:i:s');
+            $timeStart=Match::getMatchData($_SESSION['matchID'],"timeStart");
+
+            $hourdiff = (strtotime($now) - strtotime($timeStart))/3600;
+            if($hourdiff<2)
+            {
+              echo Controller::json_error("3 essais effectués. Réessayez dans 2 heures.");
+            }
+            else if($hourdiff>2)
+            {
+              Match::setMatchData($_SESSION['matchID'],"nbTry",1);
+              echo Controller::json_success($game);
+            }
+        }
+        else {
+            echo Controller::json_error("Impossible de créer le match");
+        }
+
+
+      //Si c'est la premiere partie
+      }else {
+        if ($match != null) {
+            $_SESSION['matchID'] = $match;
+            $_SESSION['gameID']=$_POST['gameID'];
+            echo Controller::json_success($game);
+        }else {
+            echo Controller::json_error("Impossible de créer le match");
+        }
+      }
+
 
     }
 
@@ -103,15 +145,13 @@ Class Controller{
     {
       $resultat = Match::findOneById($_SESSION['matchID']);
 
-
       if(isset ($_POST['time_played'])) {
         if($resultat!=null)
         {
           Match::setMatchData($resultat->id,"timeEnd", date('Y-m-d H:i:s'));
           Match::setMatchData($resultat->id,"timePlayed",$_POST['time_played']);
           Match::setMatchData($resultat->id,"score",$_POST['score']);
-          if($resultat->nbTry<3)
-          Match::setMatchData($resultat->id,"nbTry",$resultat->nbTry+1);
+
           $resultat = Match::findOneById($_SESSION['matchID']);
           echo Controller::json_success($resultat);
         }

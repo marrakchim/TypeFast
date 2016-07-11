@@ -7,7 +7,7 @@ public static $table_name = "match";
 public static function create($match_idUser, $match_idGame){
 
 $var = R::dispense(Match::$table_name);
-$var->nbTry = 0;
+$var->nbTry = 1;
 $var->idUser= $match_idUser;
 $var->idGame=$match_idGame;
 $var->timeStart=  date('Y-m-d H:i:s');
