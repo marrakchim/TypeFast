@@ -28,6 +28,9 @@ if(isset($_GET['action']) && $_GET['action']!= null)
         case 'user_match_get_all_score':
           Controller::user_match_get_all_score();
           break;
+        case 'user_match_get_score':
+          Controller::user_match_get_score();
+          break;
     }
 
 }
@@ -220,8 +223,35 @@ Class Controller{
         else echo Controller::json_error("Pas de matches");
       }
       else  echo Controller::json_error("Pas de user");
+    }
 
+    public function user_match_get_score()
+    {
+      $user_id=$_GET['userID'];
 
+      $user = User::findOneById($user_id);
+      $matches = R::exportAll(Match::findAll_Matches(),true);
+
+      $result=[];
+
+      if($user!=null)
+      {
+        if($matches!=null)
+        {
+              foreach($matches as $match)
+              {
+                if($user['id'] === $match['id_user'])
+                {
+                  $result[]=$match['score'];
+                }
+              }
+          if($result===null) echo Controller::json_error("Cet utilisateur n'a jamais joué.");
+
+          echo Controller::json_success($result);
+        }
+        else echo Controller::json_error("Pas de matches");
+      }
+      else  echo Controller::json_error("Pas de user");
     }
 
     /***********************************************************************************************/

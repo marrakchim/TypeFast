@@ -17,8 +17,31 @@ if ($_SESSION['admin']) {
         <div class="row">
           <div class="col-md-12">
 
-						<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+						<div id="highScoreChartContainer" style="height: 300px; width: 100%;"></div>
 
+						<div class="row">
+		          <div class="col-md-12">
+		            </br>
+
+
+								<form>
+									<label for="user">Voir les scores individuels</label><br/>
+		                 <select name="user" data-style="btn-info" show-tick id="user" data-width="150px" class="selectpicker">
+		                     <?php
+												 $users=User::findAll_User();
+												 foreach($users as $user){
+													if($user['login']!="admin")
+													//Recuperer l'id de l'utilisateur selectionne
+				 									echo '<option data-uuid='.$user['id'].'>' .$user['login']. '</option>';
+				 		            	}
+												 ?>
+		                 </select>
+								</form>
+
+								<div id="scoreContainer" style="height: 300px; width: 100%;"></div>
+
+
+		          </div>
 
           </div>
         </div>
@@ -43,6 +66,11 @@ if ($_SESSION['admin']) {
 	$(function () {
 
 		getUsersHighScores();
+		$('#user').on('change', function() {
+			var selection = $("#user").find(":selected").data("uuid");
+			createUserScoreChart(selection);
+		});
+
 
 	});
 
@@ -55,7 +83,7 @@ if ($_SESSION['admin']) {
   else
   {
     echo "Vous n'avez pas accès à cette page";
-    header('location:user.php');
+    header('location:userHome.php');
   }
 
  ?>

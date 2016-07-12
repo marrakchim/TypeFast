@@ -1,4 +1,3 @@
-
 function getUsersHighScores()
 {
   var data = {action : 'user_match_get_all_score'};
@@ -21,6 +20,34 @@ function getUsersHighScores()
          users.push(user);
        }
        createHighScoreChart(users);
+      }
+    else if(data.status === 'error'){
+        console.log(data.response);
+    }
+
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requête: "+
+          status, thrown
+      );
+  });
+}
+
+function createUserScoreChart(userID)
+{
+  var data = {action : 'user_match_get_score',userID:userID};
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "GET",
+     data: data,
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+      console.log(data.response);
       }
     else if(data.status === 'error'){
         console.log(data.response);
@@ -68,9 +95,9 @@ function createHighScoreChart(users)
     }
       }
 
-  var totalEmployees = "total number of players: " + (users.length-1);
+  var totalPlayers = "total number of players: " + (users.length-1);
 
-  var chart = new CanvasJS.Chart("chartContainer",{
+  var chart = new CanvasJS.Chart("highScoreChartContainer",{
     theme: "theme2",
     title:{
       text: "Highest scores"
@@ -88,7 +115,7 @@ function createHighScoreChart(users)
       type: "column",
       showInLegend: true,
       legendMarkerType: "none",
-      legendText: totalEmployees,
+      legendText: totalPlayers,
       indexLabel: "{y}",
       dataPoints: dps
     }]
