@@ -62,12 +62,9 @@ if (!isset($_SESSION['id'])) {
 		<?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ): ?>
 		<nav class="ts-sidebar">
 			<ul class="ts-sidebar-menu">
-				<li class="ts-label">Search</li>
-				<li>
-					<input type="text" class="ts-sidebar-search" placeholder="Search here...">
-				</li>
-				<li class="ts-label">Main</li>
-				<li class="open"><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
+				<li class="ts-label">Menu</li>
+				<li class="open"><a href="adminHome.php"><i class="fa fa-dashboard"></i> Accueil </a></li>
 				<li><a href="#"><i class="fa fa-desktop"></i> UI Elements</a>
 					<ul>
 						<li><a href="panels.html">Panels and Wells</a></li>
@@ -78,7 +75,7 @@ if (!isset($_SESSION['id'])) {
 						<li><a href="grid.html">Grid</a></li>
 					</ul>
 				</li>
-				<li><a href="tables.html"><i class="fa fa-table"></i> Tables</a></li>
+				<li><a href="newUser.php"><i class="fa fa-table"></i> Nouvel utilisateur</a></li>
 				<li><a href="newText.php"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
 				<li><a href="charts.html"><i class="fa fa-pie-chart"></i> Charts</a></li>
 				<li><a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown</a>

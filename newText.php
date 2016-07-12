@@ -18,24 +18,33 @@ if ($_SESSION['admin']) {
         <div class="col-md-12">
 
           <h2 class="page-title">Entrer un nouveau paragraphe</h2>
+          <div class="col-md-6 ">
 
           <div class="well">
+
             <form>
-              <textarea cols=20 rows=1 id="inputLabelAdmin"></textarea>
-              <textarea cols=40 rows=10 id="inputTextAdmin"></textarea>
+              <label>Titre</label>
+              </br>
+              <textarea class="form-control" id="inputLabelAdmin"></textarea>
+              </br>
+              <label>Texte</label>
+              </br>
+              <textarea class="form-control" rows=10 id="inputTextAdmin"></textarea>
+              </br>
+              <div id="con"></div>
 
               <label for="diff">Difficulté</label><br/>
-                 <select name="diff" id="diff">
+                 <select name="diff" show-tick id="diff" data-width="100px" class="selectpicker">
                      <option value="facile" data-id="1">Facile</option>
                      <option value="moyen" data-id="2">Moyen</option>
                      <option value="difficile" data-id="3">Difficile</option>
                  </select>
-              <div id="con"></div>
 
               </br>
             </form>
-            <button id="saveGame">Sauvegarder</button>
-
+            </br>
+            <button id="saveGame" style="width:100px" class="btn btn-danger">Sauvegarder</button>
+          </div>
           </div>
 
 

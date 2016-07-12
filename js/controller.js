@@ -293,7 +293,11 @@ function manageLogin(){
 
 }
 
-function manageRegistration (){
+
+
+function manageRegistration (admin){
+
+  console.log("registration");
 
     //Quand on clique sur le bouton du formulaire
     $('#registration').on('click', function(e) {
@@ -315,7 +319,15 @@ function manageRegistration (){
 
           request.done(function (data){
             if (data.status === 'success'){
-                window.location.href = "login.php";
+                switch(admin)
+                {
+                  case 0 :
+                    window.location.href = "login.php";
+                    break;
+                  case 1 :
+                    window.location.href = "adminHome.php"
+                    break;
+                }
             }else {
                 showError(response);
             }

@@ -61,7 +61,7 @@ require 'init.php';
 										<input type="text" id="prenom" placeholder="Prenom" class="form-control mb">
 
 										</div>
-										
+
 										<div class="col-md-6 ">
 
 										<label for="" class="text-uppercase text-sm">Nom</label>
@@ -122,7 +122,7 @@ require 'init.php';
 
 	<script>
 		$(function(){
-			manageRegistration();
+			manageRegistration(0);
 		});
 	</script>
 

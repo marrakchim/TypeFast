@@ -37,7 +37,6 @@ if ($_SESSION['admin']) {
 
           </div>
         </div>
-        <a href="#" class="text-dark"> Créer un nouvel utilisateur</a>
       </div>
     </div>
 
