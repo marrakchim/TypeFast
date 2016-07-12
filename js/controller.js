@@ -1,3 +1,107 @@
+
+function getUsersHighScores()
+{
+  var data = {action : 'user_match_get_all_score'};
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "GET",
+     data: data,
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+      console.log(data.response);
+       var users=[];
+       for(i=0;i<data.response.length; i++){
+         var user ={
+           score : data.response[i].score,
+           login : data.response[i].login,
+         };
+         users.push(user);
+       }
+       createHighScoreChart(users);
+      }
+    else if(data.status === 'error'){
+        console.log(data.response);
+    }
+
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requête: "+
+          status, thrown
+      );
+  });
+}
+
+
+
+function createHighScoreChart(users)
+{
+  var login = [];
+  var highScore = [];
+  for(i=0;i<users.length;i++)
+  {
+    var currentUser = users[i];
+    var maxScore = 0;
+    for(j=0;j<currentUser.score.length;j++)
+    {
+      maxScore = Math.max(maxScore,currentUser.score[j]);
+    }
+    highScore.push(maxScore);
+    login.push(currentUser.login);
+  }
+
+  var dps = [];
+  for(i=0;i<users.length;i++)
+  {
+    if(login[i]!="admin")
+    {
+      var info ={
+        label : login[i],
+        y : highScore[i],
+      };
+      dps.push(info);
+
+    }
+      }
+
+  var totalEmployees = "total number of players: " + (users.length-1);
+
+  var chart = new CanvasJS.Chart("chartContainer",{
+    theme: "theme2",
+    title:{
+      text: "Highest scores"
+    },
+    axisY: {
+      title: "Score"
+    },
+    legend:{
+      verticalAlign: "top",
+      horizontalAlign: "centre",
+      fontSize: 18
+
+    },
+    data : [{
+      type: "column",
+      showInLegend: true,
+      legendMarkerType: "none",
+      legendText: totalEmployees,
+      indexLabel: "{y}",
+      dataPoints: dps
+    }]
+  });
+
+  // renders initial chart
+  chart.render();
+
+
+  };
+
+
+
 function adminNewGame()
 {
   var label = $('#inputLabelAdmin').val();

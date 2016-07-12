@@ -25,9 +25,6 @@ if(isset($_GET['action']) && $_GET['action']!= null)
         case 'game_get_text':
           Controller::game_get_text();
           break;
-        case 'user_get_list':
-          Controller::user_get_list();
-          break;
         case 'user_match_get_all_score':
           Controller::user_match_get_all_score();
           break;
@@ -97,12 +94,12 @@ Class Controller{
     {
       //Dans tous les cas
       $game = Game::findOneById($_POST['gameID']);
-      $resultat=Match::getMatchData($_SESSION['matchID'],"nbTry");
 
       //Si on ne vient pas de se connecter
       //Si on a déjà joué avant
       if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null)
       {
+        $resultat=Match::getMatchData($_SESSION['matchID'],"nbTry");
 
         if ($resultat<3) {
 
@@ -192,35 +189,44 @@ Class Controller{
     {
       $users=R::exportAll(User::findAll_User(),true);
       $matches = R::exportAll(Match::findAll_Matches(),true);
-//      $object = new stdClass();
-//      $object->property = 'Here we go';
 
-      foreach($users as $user)
+      $infos=[];
+      $scores=[];
+
+      if($users!=null)
       {
-          foreach($matches as $match)
+        if($matches!=null)
+        {
+          foreach($users as $user)
           {
-            if($user.id == $match.idUser)
-            {
+            $login=$user['login'];
+              foreach($matches as $match)
+              {
+                if($user['id'] === $match['id_user'])
+                {
+                  $scores[]=$match['score'];
+                }
+              }
+              $data=array(
+              "score" => $scores,
+              "login" => $login
+              );
+              $infos[]=$data;
+              $scores=[];
 
-            }
           }
+          echo Controller::json_success($infos);
+        }
+        else echo Controller::json_error("Pas de matches");
       }
+      else  echo Controller::json_error("Pas de user");
+
+
     }
 
     /***********************************************************************************************/
 
-    public function user_get_list()
-    {
-      //Renvoyer les données sous format de tableau pas objets
-      //Manipulation plus évidente en js
-      $resultat=R::exportAll(User::findAll_User(),true);
 
-      if($resultat!=null)
-      {
-        echo Controller::json_success($resultat);
-      }
-      else  echo Controller::json_error("Pas de user");
-    }
 
     public function user_registration()
     {

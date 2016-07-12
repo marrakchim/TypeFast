@@ -77,7 +77,7 @@ if (!isset($_SESSION['id'])) {
 				</li>
 				<li><a href="newUser.php"><i class="fa fa-table"></i> Nouvel utilisateur</a></li>
 				<li><a href="newText.php"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
-				<li><a href="charts.html"><i class="fa fa-pie-chart"></i> Charts</a></li>
+				<li><a href="charts.php"><i class="fa fa-pie-chart"></i> Charts</a></li>
 				<li><a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown</a>
 					<ul>
 						<li><a href="#">2nd level</a></li>
