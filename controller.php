@@ -25,6 +25,12 @@ if(isset($_GET['action']) && $_GET['action']!= null)
         case 'game_get_text':
           Controller::game_get_text();
           break;
+        case 'user_get_list':
+          Controller::user_get_list();
+          break;
+        case 'user_match_get_all_score':
+          Controller::user_match_get_all_score();
+          break;
     }
 
 }
@@ -95,9 +101,8 @@ Class Controller{
 
       //Si on ne vient pas de se connecter
       //Si on a déjà joué avant
-      if($_SESSION['matchID']!=null)
+      if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null)
       {
-
 
         if ($resultat<3) {
 
@@ -133,6 +138,8 @@ Class Controller{
 
       //Si c'est la premiere partie
       }else {
+        $match = Match::create($_SESSION['id'],$_POST['gameID']);
+
         if ($match != null) {
             $_SESSION['matchID'] = $match;
             $_SESSION['gameID']=$_POST['gameID'];
@@ -179,9 +186,41 @@ Class Controller{
     else echo Controller::json_error("Erreur isset");
 
     }
+    /***********************************************************************************************/
 
+    public function user_match_get_all_score()
+    {
+      $users=R::exportAll(User::findAll_User(),true);
+      $matches = R::exportAll(Match::findAll_Matches(),true);
+//      $object = new stdClass();
+//      $object->property = 'Here we go';
+
+      foreach($users as $user)
+      {
+          foreach($matches as $match)
+          {
+            if($user.id == $match.idUser)
+            {
+
+            }
+          }
+      }
+    }
 
     /***********************************************************************************************/
+
+    public function user_get_list()
+    {
+      //Renvoyer les données sous format de tableau pas objets
+      //Manipulation plus évidente en js
+      $resultat=R::exportAll(User::findAll_User(),true);
+
+      if($resultat!=null)
+      {
+        echo Controller::json_success($resultat);
+      }
+      else  echo Controller::json_error("Pas de user");
+    }
 
     public function user_registration()
     {
