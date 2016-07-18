@@ -31,11 +31,10 @@ body
 	background-color:#37a6c4;
 }
 
-#container_jeu
+#container_jeu, #instructions
 {
 	display:none;
 }
-
 
 #timer
 {

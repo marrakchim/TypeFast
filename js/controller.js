@@ -405,6 +405,7 @@ function startGame()
         if (data.status === 'success'){
               convert('jeu', data.response.text);
               $("#container_jeu").show();
+              $('#instructions').show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
@@ -434,6 +435,8 @@ function refresh_button_event(element)
       compareText();
       $("#popup-score").addClass("showMe");
       $("#container_jeu").hide();
+      $('#instructions').hide();
+
     });
 }
 

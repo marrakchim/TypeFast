@@ -44,7 +44,7 @@ return R::findAll(Match::$table_name);
 
 public static function findOnebyUserID_gameID($user_id,$game_id)
 {
-  $var = R::findOne(Match::$table_name, 'id_user = ? and id_game = ?', [$user_id,$game_id]);
+  $var = R::findLast(Match::$table_name, 'id_user = ? and id_game = ?', [$user_id,$game_id]);
   return $var;
 }
 
