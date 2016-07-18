@@ -65,37 +65,11 @@ if (!isset($_SESSION['id'])) {
 
 				<li class="ts-label">Menu</li>
 				<li class="open"><a href="adminHome.php"><i class="fa fa-dashboard"></i> Accueil </a></li>
-				<li><a href="#"><i class="fa fa-desktop"></i> UI Elements</a>
-					<ul>
-						<li><a href="panels.html">Panels and Wells</a></li>
-						<li><a href="buttons.html">Buttons</a></li>
-						<li><a href="notifications.html">Notifications</a></li>
-						<li><a href="typography.html">Typography</a></li>
-						<li><a href="icon.html">Icon</a></li>
-						<li><a href="grid.html">Grid</a></li>
-					</ul>
-				</li>
+
 				<li><a href="newUser.php"><i class="fa fa-table"></i> Nouvel utilisateur</a></li>
 				<li><a href="newText.php"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
-				<li><a href="charts.php"><i class="fa fa-pie-chart"></i> Charts</a></li>
-				<li><a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown</a>
-					<ul>
-						<li><a href="#">2nd level</a></li>
-						<li><a href="#">2nd level</a></li>
-						<li><a href="#">3rd level</a>
-							<ul>
-								<li><a href="#">3rd level</a></li>
-								<li><a href="#">3rd level</a></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li><a href="#"><i class="fa fa-files-o"></i> Sample Pages</a>
-					<ul>
-						<li><a href="blank.html">Blank page</a></li>
-						<li><a href="login.php">Login page</a></li>
-					</ul>
-				</li>
+				<li><a href="charts.php"><i class="fa fa-pie-chart"></i> Statistiques</a></li>
+
 			</ul>
 
 		</nav>

@@ -31,6 +31,12 @@ body
 	background-color:#37a6c4;
 }
 
+#container_jeu
+{
+	display:none;
+}
+
+
 #timer
 {
 	font-family: "roboto light";

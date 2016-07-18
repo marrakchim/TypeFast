@@ -102,39 +102,40 @@ Class Controller{
       //Si on a déjà joué avant
       if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null)
       {
-        $resultat=Match::getMatchData($_SESSION['matchID'],"nbTry");
 
-        if ($resultat<3) {
+        $result= Match::findOnebyUserID_gameID($_SESSION['id'],$_POST['gameID']);
 
-          $match = Match::create($_SESSION['id'],$_POST['gameID']);
+        if($result!=null)
+        {
+          if ($result['nbTry']<=3) {
 
-          $_SESSION['matchID'] = $match;
-          $_SESSION['gameID']=$_POST['gameID'];
+            $match = Match::create($_SESSION['id'],$_POST['gameID']);
 
-          Match::setMatchData($match,"nbTry",$resultat+1);
-          echo Controller::json_success($game);
+            $_SESSION['matchID'] = $match;
+            $_SESSION['gameID']=$_POST['gameID'];
+
+            Match::setMatchData($match,"nbTry",$result['nbTry']+1);
+            echo Controller::json_success($game);
+            }
+            else if($result['nbTry']==4){
+              //Si la difference entre les 2 matchs > 2h il peut rejouer
+              // date à tester :
+              $now = "2016-07-10 13:52:00";//date('Y-m-d H:i:s');
+              $timeStart=Match::getMatchData($_SESSION['matchID'],"timeStart");
+
+              $hourdiff = (strtotime($now) - strtotime($timeStart))/3600;
+              if($hourdiff<2)
+              {
+                echo Controller::json_error("3 essais effectués. Réessayez dans 2 heures.");
+              }
+              else if($hourdiff>2)
+              {
+                Match::setMatchData($_SESSION['matchID'],"nbTry",1);
+                echo Controller::json_success($game);
+              }
           }
-          else if($resultat==3){
-            //Si la difference entre les 2 matchs > 2h il peut rejouer
-            // date à tester :
-            $now = "2016-07-10 13:52:00";//date('Y-m-d H:i:s');
-            $timeStart=Match::getMatchData($_SESSION['matchID'],"timeStart");
-
-            $hourdiff = (strtotime($now) - strtotime($timeStart))/3600;
-            if($hourdiff<2)
-            {
-              echo Controller::json_error("3 essais effectués. Réessayez dans 2 heures.");
-            }
-            else if($hourdiff>2)
-            {
-              Match::setMatchData($_SESSION['matchID'],"nbTry",1);
-              echo Controller::json_success($game);
-            }
         }
-        else {
-            echo Controller::json_error("Impossible de créer le match");
-        }
-
+        else echo Controller::json_error("Impossible de trouver ce match");
 
       //Si c'est la premiere partie
       }else {

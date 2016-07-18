@@ -16,6 +16,9 @@ if ($_SESSION['admin']) {
 
         <div class="row">
           <div class="col-md-12">
+            <h2 class="page-title">Créer un nouvel utilisateur</h2>
+            <div class="well">
+
             <div id="errorDiv"></div>
 
             <form action=""  class="mt">
@@ -58,9 +61,13 @@ if ($_SESSION['admin']) {
                 </div>
               </div>
 
-              <button id="registration" class="btn btn-primary btn-block" type="button">Inscription</button>
+            </br>
+
+              <button id="registration" class="btn btn-default btn-block" type="button">Nouvel utilisateur</button>
 
             </form>
+
+          </div>
 
           </div>
         </div>

@@ -18,7 +18,6 @@ if ($_SESSION['admin']) {
         <div class="col-md-12">
 
           <h2 class="page-title">Entrer un nouveau paragraphe</h2>
-          <div class="col-md-6 ">
 
           <div class="well">
 
@@ -44,7 +43,6 @@ if ($_SESSION['admin']) {
             </form>
             </br>
             <button id="saveGame" style="width:100px" class="btn btn-danger">Sauvegarder</button>
-          </div>
           </div>
 
 

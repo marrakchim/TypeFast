@@ -29,12 +29,17 @@ if (!$_SESSION['admin']) {
 
 
         <div class="row">
-          <div class="col-md-8 col-md-offset-2">
-              <div id="container-jeu" class="col-md-8 pt-3x pb-1x">
+
+          <div class="col-md-8 col-md-offset-1">
+              <div id="container_jeu" class="well pt-3x pb-1x">
                 <div id="errorDiv"></div>
                 <div id="temps">Temps restant : </div>
                 <div id="timer" class="text-center text-dark"></div>
-                <div id="jeu" class="pt-2x pb-2x text-center"></div>
+                <div id="jeu" class="pt-2x pb-2x text-center">
+                  <textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>
+                  <button id="buttonCheck" class="btn btn-success mt-2x">Verifier</button>
+                </div>
+
               </div>
           </div>
         </div>

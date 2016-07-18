@@ -16,17 +16,21 @@ if ($_SESSION['admin']) {
 
         <div class="row">
           <div class="col-md-12">
+            <h2 class="page-title">Voir les statistiques</h2>
+
+            <h3>Tous les utilisateurs</h3>
+
 
 						<div id="highScoreChartContainer" style="height: 300px; width: 100%;"></div>
+          </br>
 
 						<div class="row">
 		          <div class="col-md-12">
 		            </br>
 
-
 								<form>
 									<label for="user">Voir les scores individuels</label><br/>
-		                 <select name="user" data-style="btn-info" show-tick id="user" data-width="150px" class="selectpicker">
+		                 <select name="user" title="Choisir un utilisateur" data-style="btn-info" show-tick id="user" data-width="150px" class="selectpicker">
 		                     <?php
 												 $users=User::findAll_User();
 												 foreach($users as $user){
@@ -37,6 +41,7 @@ if ($_SESSION['admin']) {
 												 ?>
 		                 </select>
 								</form>
+
 
 								<div id="scoreContainer" style="height: 300px; width: 100%;"></div>
 

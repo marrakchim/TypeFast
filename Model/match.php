@@ -42,6 +42,12 @@ public static function findAll_Matches(){
 return R::findAll(Match::$table_name);
 }
 
+public static function findOnebyUserID_gameID($user_id,$game_id)
+{
+  $var = R::findOne(Match::$table_name, 'id_user = ? and id_game = ?', [$user_id,$game_id]);
+  return $var;
+}
+
 public static function exists($elemen_uuid){
 $var =  R::findOne(Match::$table_name , ' id = ? ', [ $elemen_uuid ] );
 return $var != NULL;

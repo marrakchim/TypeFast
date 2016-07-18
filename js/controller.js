@@ -47,7 +47,62 @@ function createUserScoreChart(userID)
 
   request.done(function (data){
     if (data.status === 'success'){
-      console.log(data.response);
+      var scores = data.response;
+      console.log(scores);
+
+      var dps = [];
+      for(i=0;i<scores.length;i++)
+      {
+          var info ={
+            x : i+1,
+            y : parseInt(scores[i]),
+          };
+          dps.push(info);
+      }
+
+      console.log(dps);
+      //Better to construct options first and then pass it as a parameter
+    	var options = {
+    		title: {
+    			text: "Spline Chart using jQuery Plugin"
+    		},
+                    animationEnabled: true,
+    		data: [
+    		{
+    			type: "column", //change it to line, area, column, pie, etc
+    			dataPoints: dps
+    		}
+    		]
+    	};
+
+//    	$("#scoreContainer").CanvasJSChart(options);
+
+      var chart = new CanvasJS.Chart("scoreContainer",{
+        theme: "theme2",
+        title:{
+          text: "Scores"
+        },
+        axisY: {
+          title: "Score"
+        },
+        legend:{
+          verticalAlign: "top",
+          horizontalAlign: "centre",
+          fontSize: 18
+
+        },
+        data : [{
+          type: "column",
+          showInLegend: true,
+          legendMarkerType: "none",
+          legendText: "Par partie",
+          indexLabel: "{y}",
+          dataPoints: dps
+        }]
+      });
+      // renders initial chart
+      chart.render();
+
       }
     else if(data.status === 'error'){
         console.log(data.response);
@@ -61,6 +116,7 @@ function createUserScoreChart(userID)
           status, thrown
       );
   });
+
 }
 
 
@@ -93,14 +149,14 @@ function createHighScoreChart(users)
       dps.push(info);
 
     }
-      }
+  }
 
-  var totalPlayers = "total number of players: " + (users.length-1);
+  var totalPlayers = "Nombre total de joueurs: " + (users.length-1);
 
   var chart = new CanvasJS.Chart("highScoreChartContainer",{
     theme: "theme2",
     title:{
-      text: "Highest scores"
+      text: "Meilleurs scores"
     },
     axisY: {
       title: "Score"
@@ -146,6 +202,8 @@ function adminNewGame()
   request.done(function (data){
     if (data.status === 'success'){
        console.log(data.status);
+       window.location.href  = "adminHome.php";
+
       }
     else if(data.status === 'error'){
         console.log(data.response);
@@ -346,15 +404,14 @@ function startGame()
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
               convert('jeu', data.response.text);
-              var input = '<textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>';
-              var but = '<button id="buttonCheck" class="btn btn-success mt-2x">Verifier</button'
-              $("#jeu").append(input);
-              $("#jeu").append(but);
+              $("#container_jeu").show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
-            $("#container-jeu").html("");
-            $('#container-jeu').append(data.response);
+            $("#container_jeu").html("");
+            console.log(data.response);
+            $('#container_jeu').append(data.response);
+            $("#container_jeu").show();
         }
 
 
@@ -376,7 +433,7 @@ function refresh_button_event(element)
     element.on('click', function(){
       compareText();
       $("#popup-score").addClass("showMe");
-      $("#container-jeu").hide();
+      $("#container_jeu").hide();
     });
 }
 

@@ -17,28 +17,94 @@ if ($_SESSION['admin']) {
         <div class="row">
           <div class="col-md-12">
             </br>
-            <?php $users=User::findAll_User();
-            foreach($users as $user){
-                echo '<div class="col-md-6" >';
-                  echo 'Nom : ' .$user['nom'];
-                  echo '</br>';
-                  echo 'Prénom : ' .$user['prenom'];
-                  echo '</br>';
-                  echo 'Adresse e-mail : ' .$user['mail'];
-                  echo '</br>';
-                  echo 'Login : ' .$user['login'];
-                  echo '</br>';
-                  echo 'Admin : ' .$user['admin'];
-                  echo '</br>';
-                  echo '</br>';
-                echo '</div>';
-            }
-            ?>
+
+            <!-- Zero Configuration Table -->
+            <div  class="panel panel-default">
+              <div class="panel-heading">Tous les utilisateurs</div>
+              <div class="panel-body">
+                <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Nom</th>
+                      <th>Prénom</th>
+                      <th>Adresse e-mail</th>
+                      <th>Login</th>
+                      <th>Admin</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Nom</th>
+                      <th>Prénom</th>
+                      <th>Adresse e-mail</th>
+                      <th>Login</th>
+                      <th>Admin</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  <?php $users=User::findAll_User();
+                    foreach($users as $user){
+                      echo '<tr>';
+                      echo '<td>' .$user['nom']. '</td>';
+                      echo '<td>' .$user['prenom']. '</td>';
+                      echo '<td>' .$user['mail']. '</td>';
+                      echo '<td>' .$user['login']. '</td>';
+                      echo '<td>' .$user['admin']. '</td>';
+                      echo '</tr>';
+                    }
+                  ?>
+
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <!-- Zero Configuration Table -->
+            <div  class="panel panel-default">
+              <div class="panel-heading">Tous les jeux </div>
+              <div class="panel-body">
+                <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Titre</th>
+                      <th>Texte</th>
+                      <th>Difficulté</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Titre</th>
+                      <th>Texte</th>
+                      <th>Difficulté</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  <?php $games=Game::findAll_Games();
+                    foreach($games as $game){
+                      echo '<tr>';
+                        echo '<td>' .$game['label']. '</td>';
+                        echo '<td>' .$game['text']. '</td>';
+                        echo '<td>' .$game['difficulty']. '</td>';
+                      echo '</tr>';
+                    }
+                  ?>
+                  </tbody>
+                </table>
+
+
 
           </div>
         </div>
+
+
+
       </div>
     </div>
+
 
     <!-- Loading Scripts -->
     <script src="js/jquery.min.js"></script>
