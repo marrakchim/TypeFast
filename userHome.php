@@ -2,8 +2,10 @@
 
 include ('init.php');
 
-if (!$_SESSION['admin']) {
-  include ('header.php');
+
+
+  if (!$_SESSION['admin']) {
+    include ('header.php');
 ?>
 
 <title>TypeFast - <?php echo $_SESSION['login']; ?> </title>
@@ -20,9 +22,8 @@ if (!$_SESSION['admin']) {
                   <div class="jumbotron">
                     <p>Partie terminée</p>
                     <div id="score"></div>
-                    <div class="col-sm-4">
-                       <button  class="btn btn-danger"  id="reload">Nouvelle partie</button>
-                    </div>
+                  </br>
+                    <button  class="btn btn-danger"  id="reload">Nouvelle partie</button>
                   </div>
                   </div>
                 </div>
@@ -38,10 +39,9 @@ if (!$_SESSION['admin']) {
 
         <div class="row">
           <div class="col-md-8 col-md-offset-1">
-              <div id="container_jeu" class="well pt-3x pb-1x">
+              <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
                   <div class="col-md-6 col-md-offset-2">
-                    <div id="errorDiv"></div>
                     <div id="timer" class="text-center text-dark"></div>
                     <div id="jeu" class="pt-2x pb-2x text-center">  </div>
                     <textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>
@@ -74,6 +74,7 @@ if (!$_SESSION['admin']) {
                           <div class="col-sm-4">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
+                          <div id="essais" class="pt-3x"></div>
                         </div>
                          <br>
                       </div>
@@ -110,9 +111,13 @@ if (!$_SESSION['admin']) {
 
 //Gestion du pop up
         $('#newGame').on('click', function(){
-              close_popup();
               startGame();
+
               handleTimer();
+        });
+
+        $('#reload').on('click', function(){
+              location.reload();
         });
     });
 
@@ -125,12 +130,12 @@ if (!$_SESSION['admin']) {
 
 <?php
 
-}
-else
-{
-  echo "Vous n'avez pas accès à cette page";
-  header('location:adminHome.php');
-}
+  }
+  else
+  {
+    echo "Vous n'avez pas accès à cette page";
+    header('location:adminHome.php');
+  }
 
 
 ?>

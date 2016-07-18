@@ -392,7 +392,6 @@ function startGame()
 {
       var selection = $("#choixJeu").find(":selected").data("uuid");
       var data = {action:'game_start_game', gameID:selection};
-      $("#temps").show();
 
       request = $.ajax({
          url:'controller.php',
@@ -403,20 +402,17 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
+              close_popup();
               convert('jeu', data.response.text);
               $("#container_jeu").show();
               $('#instructions').show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
-            $("#container_jeu").html("");
             console.log(data.response);
-            $('#container_jeu').append(data.response);
-            $("#container_jeu").show();
+            $('#essais').append(data.response);
+            $("#essais").show();
         }
-
-
-
       });
 
       request.fail(function (xhr, ajaxOptions, thrownError){
@@ -426,6 +422,9 @@ function startGame()
         alert(thrownError);
       });
 
+      $("#choixPartie").on('change',function(){
+        $('#essais').hide();
+      });
 
 }
 
@@ -478,7 +477,6 @@ function manageLogin(){
     });
 
     $(".form-control").on('input',function(){
-      console.log("hide error");
       hideError();
     });
 

@@ -31,7 +31,7 @@ body
 	background-color:#37a6c4;
 }
 
-#container_jeu, #instructions
+#container_jeu, #instructions, #essais
 {
 	display:none;
 }
