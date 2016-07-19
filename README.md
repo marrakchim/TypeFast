@@ -1,4 +1,4 @@
-# [TypeFast]
+# TypeFast
 
 Measure your speed
 
