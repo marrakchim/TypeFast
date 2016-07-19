@@ -10,7 +10,6 @@ if ($_SESSION['admin']) {
   ?>
   <title>TypeFast - Administrateur</title>
 
-
     <div class="content-wrapper">
       <div class="container-fluid">
 

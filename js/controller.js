@@ -402,7 +402,6 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
-              close_popup();
               convert('jeu', data.response.text);
               $("#container_jeu").show();
               $('#instructions').show();

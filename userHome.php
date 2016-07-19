@@ -8,6 +8,7 @@ include ('init.php');
     include ('header.php');
 ?>
 
+
 <title>TypeFast - <?php echo $_SESSION['login']; ?> </title>
 
   <div id="container-general" class="content-wrapper">
@@ -32,9 +33,40 @@ include ('init.php');
         </div>
 
         <div id="instructions" class="col-md-8 col-md-offset-1" >
-          <h2 >Tapez le plus vite possible ! </h2>
-          <h3 class="mb-2x">Vous avez 5 minutes et 3 essais... </h3>
+          <h2 class="mb-2x" >TypeFast </h2>
+        </div>
 
+        <div id="popup-instructions" class="popup showMe">
+          <div class="overflow"></div>
+          <div class="row modal-pop">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="well row pt-3x pb-1x bk-light">
+                  <div class="text-center text-dark">
+                  <div class="jumbotron">
+                    <h1>Bienvenue</h1>
+                    <h3>Instructions</h3>
+                      <div id="informations" class="mb-3x mt-2x text-justify">
+                        <h4>
+                        Vous disposez de 3 essais maximum étalés sur 2 heures.</br>
+
+                        Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br>
+
+                        Le calcul des scores se fait de cette manière :</br>
+
+                        - Score maximal 100 points</br>
+                        - Chaque erreur tapée réduit le score de 0.5 point.</br>
+                        - Chaque mot manquant réduit le score de 0.5 point.</br>
+                        </h4>
+
+                        <button  class="btn btn-info mt-2x"  id="gotIt">J'ai compris</button>
+                        </div>
+                        <br>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
         </div>
 
         <div class="row">
@@ -53,14 +85,14 @@ include ('init.php');
           </div>
         </div>
 
-        <div id="popup-view" class="popup showMe">
+        <div id="popup-view" class="popup">
           <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
                 <div class="well row pt-3x pb-1x bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
-                    <h1>Bienvenue !</h1>
+                    <h1>TypeFast</h1>
                       <div id="choixPartie">
                         <p>Veuillez choisir une partie </p>
 
@@ -111,9 +143,16 @@ include ('init.php');
 
 //Gestion du pop up
         $('#newGame').on('click', function(){
-              startGame();
+          startGame();
+          handleTimer();
+          $('#popup-instructions').removeClass("showMe");
+        });
 
-              handleTimer();
+//Clic sur new game -> show instructions
+//Clic sur got it -> start game
+        $('#gotIt').on('click', function(){
+          $('#popup-instructions').removeClass('showMe');
+          $('#popup-view').addClass('showMe');
         });
 
         $('#reload').on('click', function(){
