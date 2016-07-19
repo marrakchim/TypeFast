@@ -1,24 +1,13 @@
-# [Harmony - Free responsive Bootstrap admin template ](http://themestruck.com/) by [ThemeStruck](http://themestruck.com/theme/harmony-admin)
+# [TypeFast]
 
-[Harmony - Free responsive Bootstrap admin template ](http://themestruck.com/theme/harmony-admin) is a Responsive Admin Template, Dashboard template, or webapp UI starter theme. [Bootstrap](http://getbootstrap.com/)
-
-[Harmony - Free responsive Bootstrap admin template ](http://themestruck.com/theme/harmony-admin) Beautifully Designed Responsive Bootstrap Template
+Measure your speed
 
 ## Getting Started
 
-You can simply download or Fork this repository on Github to get started.
+TypeFast is a game in which you are supposed to type a given text as fast as you can in a limited time (5 minutes). Your score will then be displayed, according to the mistakes you made typing back.
+With a maximum of 100 points, you lose 0.5 points per mistake.
 
-## Bugs and Issues
+Administrator uploads several games and can get the statistics on every player. 
 
-If you have any bug or Issues with this template, please comment on the [Harmony Admin Page](http://themestruck.com/theme/harmony-admin)
 
-## Creator
 
-ThemeStruck is sister platform of Thecodeblock and is created and maintained by **Nikhil Arora** [Reach Here](http://nikhilaroar.in), Front end designer at [Thecodeblock](http://thecodeblock.com).
-
-* Nikhil's Twitter : [https://twitter.com/nikhilarora_in](https://twitter.com/nikhilarora_in)
-* ThemeStruck's Twitter : [https://twitter.com/themestruck](https://twitter.com/themestruck)
-
-## License
-
-The code of this template is released under Creative commons Attribution 3.0 License. You can learn more about it on our **[Terms & License](http://themestruck.com/terms-license/)** page.
