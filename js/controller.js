@@ -345,7 +345,11 @@ function handleTimer() {
           alert('Time up!');
           $("#timer").html("");
           $("#timer").append("Temps écoulé.");
-          document.location.href="userHome.php"
+          document.location.href="userHome.php";
+          compareText();
+          $("#popup-score").addClass("showMe");
+          $("#container_jeu").hide();
+          $('#instructions').hide();
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
         repeat:     false,     // If duration is set, `callback` will be called repeatedly
@@ -402,13 +406,14 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
+              close_popup();
               convert('jeu', data.response.text);
               $("#container_jeu").show();
               $('#instructions').show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
-            console.log(data.response);
+            $('#essais').html("");
             $('#essais').append(data.response);
             $("#essais").show();
         }

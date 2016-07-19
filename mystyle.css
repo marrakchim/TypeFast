@@ -28,6 +28,7 @@ body
 #buttonCheck
 {
 	background-color:#37a6c4;
+	width:150px;
 }
 
 #container_jeu, #instructions, #essais
@@ -41,6 +42,10 @@ body
 	font-size:16;
 }
 
+#textInput
+{
+	border-radius : 10px;
+}
 
 .showMe {
 	display: block!important;

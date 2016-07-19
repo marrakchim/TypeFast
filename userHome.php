@@ -46,19 +46,19 @@ include ('init.php');
                     <h1>Bienvenue</h1>
                     <h3>Instructions</h3>
                       <div id="informations" class="mb-3x mt-2x text-justify">
-                        <h4>
-                        Vous disposez de 3 essais maximum étalés sur 2 heures.</br>
+                        <h5>
+                        Vous disposez de 3 essais maximum étalés sur 2 heures.</br></br>
 
                         Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br>
 
-                        Le calcul des scores se fait de cette manière :</br>
+                        Le calcul des scores se fait de cette manière :</br></br>
 
-                        - Score maximal 100 points</br>
-                        - Chaque erreur tapée réduit le score de 0.5 point.</br>
-                        - Chaque mot manquant réduit le score de 0.5 point.</br>
-                        </h4>
+                        - Score maximal 100 points</br></br>
+                        - Chaque erreur tapée réduit le score de 0.5 point.</br></br>
+                        - Chaque mot manquant réduit le score de 0.5 point.</br></br>
+                        </h5>
 
-                        <button  class="btn btn-info mt-2x"  id="gotIt">J'ai compris</button>
+                        <button  class="col-md-6 col-md-offset-3 btn btn-info"  id="gotIt">J'ai compris</button>
                         </div>
                         <br>
                       </div>
@@ -73,12 +73,33 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
-                  <div class="col-md-6 col-md-offset-2">
-                    <div id="timer" class="text-center text-dark"></div>
-                    <div id="jeu" class="pt-2x pb-2x text-center">  </div>
-                    <textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>
-
-                    <button id="buttonCheck" class="col-md-8 col-md-offset-3 btn btn-success mt-2x">Verifier</button>
+                  <div class="col-md-10 col-md-offset-2 ">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <p class="text-center">Temps restant</p>
+                      </div>
+                      <div class="col-md-4">
+                        <div id="timer" class="text-center text-dark"></div>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div id="jeu" class="text-center"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <form>
+                        <textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <button id="buttonCheck" class=" btn btn-success mt-2x">Verifier</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
