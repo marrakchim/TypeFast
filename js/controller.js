@@ -10,7 +10,6 @@ function getUsersHighScores()
 
   request.done(function (data){
     if (data.status === 'success'){
-      console.log(data.response);
        var users=[];
        for(i=0;i<data.response.length; i++){
          var user ={
@@ -48,7 +47,6 @@ function createUserScoreChart(userID)
   request.done(function (data){
     if (data.status === 'success'){
       var scores = data.response;
-      console.log(scores);
 
       var dps = [];
       for(i=0;i<scores.length;i++)
@@ -60,7 +58,6 @@ function createUserScoreChart(userID)
           dps.push(info);
       }
 
-      console.log(dps);
       //Better to construct options first and then pass it as a parameter
     	var options = {
     		title: {
@@ -248,7 +245,6 @@ function compareText()
        else
        {
          var score = calculateScore(countDifferences(textInput,data.response.text," "));
-         console.log(score);
          updateMatchInfo(score);
          //afficher le score sur la page
          $("#score").html(score);
@@ -280,15 +276,18 @@ function calculateScore(nbDifferences)
 
 function countDifferences(a,b, separator)
 {
+  //Transformer un string en chaine de caracteres
   a = a.replace(/\s+/g, " ");
   var arrayA = a.split(separator);
   var arrayB = b.split(separator);
 
   var count;
   var nbDifferences = 0;
+  //Quelle chaine de caracteres est la plus longue
   if(arrayA.length <= arrayB.length)
   {
     count = arrayA.length;
+    //on chope le nombre de differences dans la taille des 2 strings deja
     nbDifferences = arrayB.length-arrayA.length;
   }
   else
@@ -297,6 +296,7 @@ function countDifferences(a,b, separator)
     nbDifferences = arrayA.length-arrayB.length;
   }
 
+  //On compte le nombre de differences
   for (var i=0; i < count; i++)
   {
     if(arrayA[i] != arrayB[i])
@@ -304,6 +304,7 @@ function countDifferences(a,b, separator)
       nbDifferences ++;
     }
   }
+
   return nbDifferences;
 }
 
@@ -313,7 +314,6 @@ function updateMatchInfo(score) {
   var timeEnd = timeNow();
   var timePlayed = 300 - $("#timer").data('seconds');
   var data = {action:'match_update_info',time_played:timePlayed,score:score};
-  console.log(data);
 
   request = $.ajax({
      url:'controller.php',
@@ -342,10 +342,8 @@ function handleTimer() {
   $("#timer").timer({
         duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
-          alert('Time up!');
           $("#timer").html("");
-          $("#timer").append("Temps écoulé.");
-          document.location.href="userHome.php";
+          $("#partieTerminee").append("</br>Temps écoulé.");
           compareText();
           $("#popup-score").addClass("showMe");
           $("#container_jeu").hide();
@@ -360,7 +358,6 @@ function handleTimer() {
 function pauseTimer()
 {
   $("#timer").timer('pause');
-
 }
 
 function playTimer()
@@ -418,6 +415,7 @@ function startGame()
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
               close_popup();
+              handleTimer();
               convert('jeu', data.response.text);
               $("#container_jeu").show();
               $('#title').show();
@@ -500,8 +498,6 @@ function manageLogin(){
 
 
 function manageRegistration (admin){
-
-  console.log("registration");
 
     //Quand on clique sur le bouton du formulaire
     $('#registration').on('click', function(e) {

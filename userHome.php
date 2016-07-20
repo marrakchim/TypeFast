@@ -19,7 +19,7 @@ include ('init.php');
                 <div class="well row pt-3x pb-1x bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
-                    <p>Partie terminée</p>
+                    <p id="partieTerminee">Partie terminée</p>
                     <div id="score"></div>
                   </br>
                     <button  class="btn btn-danger"  id="reload">Nouvelle partie</button>
@@ -169,7 +169,6 @@ include ('init.php');
 //Gestion du pop up
         $('#newGame').on('click', function(){
           startGame();
-          handleTimer();
         });
 
 //Clic sur new game -> show instructions

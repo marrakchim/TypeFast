@@ -64,9 +64,9 @@ if (!isset($_SESSION['id'])) {
 			<ul class="ts-sidebar-menu">
 
 				<li class="ts-label">Menu</li>
-				<li class="open"><a href="adminHome.php"><i class="fa fa-dashboard"></i> Accueil </a></li>
+				<li class="open"><a href="adminHome.php"><i class="fa fa-home"></i> Accueil </a></li>
 
-				<li><a href="newUser.php"><i class="fa fa-table"></i> Nouvel utilisateur</a></li>
+				<li><a href="newUser.php"><i class="fa fa-plus"></i> Nouvel utilisateur</a></li>
 				<li><a href="newText.php"><i class="fa fa-edit"></i> Ecrire un paragraphe</a></li>
 				<li><a href="charts.php"><i class="fa fa-pie-chart"></i> Statistiques</a></li>
 
