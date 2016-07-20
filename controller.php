@@ -137,7 +137,7 @@ Class Controller{
         }
         else echo Controller::json_error("Impossible de trouver ce match");
       }
-      elseif($_POST['gameID']!=$_SESSION['gameID']){
+      elseif(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null && $_POST['gameID']!=$_SESSION['gameID']){
         //creer un nouveau match avec le nouveau id_game
         $match = Match::create($_SESSION['id'],$_POST['gameID']);
 

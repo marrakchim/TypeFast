@@ -2,8 +2,6 @@
 
 include ('init.php');
 
-
-
   if (!$_SESSION['admin']) {
     include ('header.php');
 ?>
@@ -35,10 +33,9 @@ include ('init.php');
 
 
         <div id="popup-instructions" class="popup">
-          <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
-                <div class="well row pt-3x pb-1x bk-light">
+                <div class=" row bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
 
@@ -47,7 +44,7 @@ include ('init.php');
                         <h5>
                         Vous disposez de 3 essais maximum étalés sur 2 heures.</br></br>
 
-                        Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br>
+                        Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br></br>
 
                         Le calcul des scores se fait de cette manière :</br></br>
 
@@ -56,7 +53,7 @@ include ('init.php');
                         - Chaque mot manquant réduit le score de 0.5 point.</br></br>
                         </h5>
 
-                        <button  class="col-md-6 col-md-offset-3 btn btn-info"  id="gotIt">J'ai compris</button>
+                        <button  class="col-md-6 btn btn-info"  id="gotIt">J'ai compris</button>
                         </div>
                         <br>
                       </div>
@@ -78,7 +75,7 @@ include ('init.php');
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
                   <div class="col-md-10 col-md-offset-10 mb-2x">
-                    <button id="btn-instructions" class="btn btn-md btn-round"><span class="">?</span></button>
+                    <button id="btn-instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
                   </div>
                 </div>
                 <div class="row">
@@ -104,7 +101,7 @@ include ('init.php');
                     </div>
                     <div class="row">
                       <div class="col-md-6 col-md-offset-3">
-                        <button id="buttonCheck" class=" btn btn-success mt-2x">Verifier</button>
+                        <button id="buttonCheck" class=" btn btn-info mt-2x">Verifier</button>
                       </div>
                     </div>
                   </div>
@@ -178,14 +175,14 @@ include ('init.php');
 //Clic sur new game -> show instructions
 //Clic sur got it -> start game
         $('#gotIt').on('click', function(){
-          $('#popup-instructions').removeClass('showMe');
+          $('#popup-instructions').removeClass('slideDown');
           $('#container_jeu').show();
           $('#title').show();
           playTimer();
         });
 
         $('#btn-instructions').on('click',function(){
-          $('#popup-instructions').addClass('showMe');
+          $('#popup-instructions').addClass('slideDown');
           pauseTimer();
           $('#container_jeu').hide();
           $('#title').hide();
@@ -197,9 +194,12 @@ include ('init.php');
     });
 
 
+
     function close_popup(){
         Pblock = $('#popup-view').removeClass('showMe');
     }
+
+
 
   </script>
 
