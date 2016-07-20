@@ -32,19 +32,17 @@ include ('init.php');
           </div>
         </div>
 
-        <div id="instructions" class="col-md-8 col-md-offset-1" >
-          <h2 class="mb-2x" >TypeFast </h2>
-        </div>
 
-        <div id="popup-instructions" class="popup showMe">
+
+        <div id="popup-instructions" class="popup">
           <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
                 <div class="well row pt-3x pb-1x bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
-                    <h1>Bienvenue</h1>
-                    <h3>Instructions</h3>
+
+                    <h1>Instructions</h1>
                       <div id="informations" class="mb-3x mt-2x text-justify">
                         <h5>
                         Vous disposez de 3 essais maximum étalés sur 2 heures.</br></br>
@@ -69,14 +67,25 @@ include ('init.php');
           </div>
         </div>
 
+        <div id="title" class="col-md-10 col-md-offset-1" >
+          <div class="row">
+            <h2 class="mb-2x">TypeFast </h2>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
-                  <div class="col-md-10 col-md-offset-2 ">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <p class="text-center">Temps restant</p>
+                  <div class="col-md-10 col-md-offset-10 mb-2x">
+                    <button id="btn-instructions" class="btn btn-md btn-round"><span class="">?</span></button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-10 col-md-offset-3 ">
+                    <div class="row mb-2x">
+                      <div class="col-md-4 text-center ">
+                        <p class="text-center text-dark textSize">Temps restant</p>
                       </div>
                       <div class="col-md-4">
                         <div id="timer" class="text-center text-dark"></div>
@@ -84,19 +93,17 @@ include ('init.php');
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-6 col-md-offset-3">
                         <div id="jeu" class="text-center"></div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-8">
-                        <form>
-                        <textarea id="textInput" rows="7" cols="50" class="mt-2x"></textarea>
-                        </form>
+                      <div class="col-md-6 col-md-offset-3">
+                        <textarea id="textInput"  class="centre mt-2x"></textarea>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-6 col-md-offset-3">
                         <button id="buttonCheck" class=" btn btn-success mt-2x">Verifier</button>
                       </div>
                     </div>
@@ -106,10 +113,10 @@ include ('init.php');
           </div>
         </div>
 
-        <div id="popup-view" class="popup">
+        <div id="popup-view" class="popup showMe">
           <div class="overflow"></div>
           <div class="row modal-pop">
-            <div class="col-md-6 col-md-offset-2">
+            <div class="col-md-6 col-md-offset-3">
                 <div class="well row pt-3x pb-1x bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
@@ -166,14 +173,22 @@ include ('init.php');
         $('#newGame').on('click', function(){
           startGame();
           handleTimer();
-          $('#popup-instructions').removeClass("showMe");
         });
 
 //Clic sur new game -> show instructions
 //Clic sur got it -> start game
         $('#gotIt').on('click', function(){
           $('#popup-instructions').removeClass('showMe');
-          $('#popup-view').addClass('showMe');
+          $('#container_jeu').show();
+          $('#title').show();
+          playTimer();
+        });
+
+        $('#btn-instructions').on('click',function(){
+          $('#popup-instructions').addClass('showMe');
+          pauseTimer();
+          $('#container_jeu').hide();
+          $('#title').hide();
         });
 
         $('#reload').on('click', function(){

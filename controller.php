@@ -100,7 +100,7 @@ Class Controller{
 
       //Si on ne vient pas de se connecter
       //Si on a déjà joué avant
-      if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null)
+      if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null && $_POST['gameID']==$_SESSION['gameID'])
       {
 
         $result= Match::findOnebyUserID_gameID($_SESSION['id'],$_POST['gameID']);
@@ -136,6 +136,19 @@ Class Controller{
           }
         }
         else echo Controller::json_error("Impossible de trouver ce match");
+      }
+      elseif($_POST['gameID']!=$_SESSION['gameID']){
+        //creer un nouveau match avec le nouveau id_game
+        $match = Match::create($_SESSION['id'],$_POST['gameID']);
+
+        if ($match != null) {
+            $_SESSION['matchID'] = $match;
+            $_SESSION['gameID']=$_POST['gameID'];
+            echo Controller::json_success($game);
+        }else {
+            echo Controller::json_error("Impossible de créer le match");
+        }
+
       }
       //Si c'est la premiere partie
       else {

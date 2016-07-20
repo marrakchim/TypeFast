@@ -349,12 +349,23 @@ function handleTimer() {
           compareText();
           $("#popup-score").addClass("showMe");
           $("#container_jeu").hide();
-          $('#instructions').hide();
+          $('#title').hide();
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
         repeat:     false,     // If duration is set, `callback` will be called repeatedly
         format:    '%M:%S'    // Format to show time in
       });
+}
+
+function pauseTimer()
+{
+  $("#timer").timer('pause');
+
+}
+
+function playTimer()
+{
+  $("#timer").timer('resume');
 }
 
 /***********************************************************************************************/
@@ -409,7 +420,7 @@ function startGame()
               close_popup();
               convert('jeu', data.response.text);
               $("#container_jeu").show();
-              $('#instructions').show();
+              $('#title').show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
@@ -438,7 +449,7 @@ function refresh_button_event(element)
       compareText();
       $("#popup-score").addClass("showMe");
       $("#container_jeu").hide();
-      $('#instructions').hide();
+      $('#title').hide();
 
     });
 }
