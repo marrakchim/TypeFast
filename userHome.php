@@ -75,7 +75,7 @@ include ('init.php');
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
                   <div class="col-md-10 col-md-offset-10 mb-2x">
-                    <button id="btn-instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
+                    <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
                   </div>
                 </div>
                 <div class="row">
@@ -194,10 +194,17 @@ include ('init.php');
 
 
 
+
     function close_popup(){
         Pblock = $('#popup-view').removeClass('showMe');
     }
 
+/*test local storage
+    if (window.localStorage){ alert('localStorage is supported'); }else
+    {
+    alert('localStorage is not supported');
+    }
+*/
 
 
   </script>

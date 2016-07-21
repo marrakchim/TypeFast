@@ -329,7 +329,7 @@ function updateMatchInfo(score) {
   });
 
   request.fail(function (xhr, ajaxOptions, thrownError){
-    alert("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
+    console.log("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
   });
 
 }
@@ -429,10 +429,8 @@ function startGame()
       });
 
       request.fail(function (xhr, ajaxOptions, thrownError){
-        alert(xhr.statusText);
-        alert(xhr.responseText);
-        alert(xhr.status);
-        alert(thrownError);
+        console.log("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
+
       });
 
       $("#choixPartie").on('change',function(){
@@ -657,7 +655,7 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
       y: 0,
       fill: '#000000',
       width:400,
-      fontFamily: "roboto light",
+      fontFamily: "roboto-light",
       fontSize: 16,
       fill: '#000000',
       align: 'left',

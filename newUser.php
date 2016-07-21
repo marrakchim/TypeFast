@@ -3,8 +3,6 @@
 include ('init.php');
 
 if ($_SESSION['admin']) {
-
-
   include ('header.php');
 
   ?>
