@@ -98,69 +98,72 @@ Class Controller{
       //Dans tous les cas
       $game = Game::findOneById($_POST['gameID']);
 
-      //Si on ne vient pas de se connecter
-      //Si on a déjà joué avant
-      if(isset($_SESSION['matchID']) && $_SESSION['matchID']!=null && $_POST['gameID']==$_SESSION['gameID'])
+      // Si le jeu existe et encore active
+      if($game != null && $game->status == 0)
       {
 
-        $result= Match::findOnebyUserID_gameID($_SESSION['id'],$_POST['gameID']);
+        $lastMatch = Match::findLastOneByUserID_gameID($_SESSION['id'],$_POST['gameID']);
 
-        if($result!=null)
+        // Si le joueur a joué déjà une partie du match type gameID
+        if ($lastMatch != null)
         {
-          if ($result['nbTry']<3) {
 
-            $match = Match::create($_SESSION['id'],$_POST['gameID']);
+          // Si le nombre <3 
+          if ($lastMatch->nbTry < 3) {
 
-            $_SESSION['matchID'] = $match;
-            $_SESSION['gameID']=$_POST['gameID'];
+              $match = Match::create($_SESSION['id'],$_POST['gameID']);
 
-            Match::setMatchData($match,"nbTry",$result['nbTry']+1);
-            echo Controller::json_success($game);
-            }
-            else if($result['nbTry']==3){
-              //Si la difference entre les 2 matchs > 2h il peut rejouer
-              // date à tester :
+              $_SESSION['matchID'] = $match;
+              $_SESSION['gameID']=$_POST['gameID'];
+
+              Match::setMatchData($match,"nbTry",$lastMatch->nbTry+1);
+              echo Controller::json_success($game);
+
+          }else {
+
+            // Si le temps < 2 donc le sys affiche l'erreur "3 essais effectués..."
+            // Sinon le joueur peut jouer une partie de plus : donc une de plus chaque 2H
+
               $now = date('Y-m-d H:i:s');
-              $timeStart=$result['timeStart'];
+              $timeStart=$lastMatch->timeStart;
+              $hourdiff = (strtotime($now) - strtotime($timeStart))/3600;
 
-              $hourdiff = (strtotime($timeStart) - strtotime($now))/3600;
               if($hourdiff<2)
               {
                 echo Controller::json_error("3 essais effectués. Réessayez dans 2 heures.");
-              }
-              else
-              {
-                Match::setMatchData($_SESSION['matchID'],"nbTry",1);
+              }else {
+
+                $match = Match::create($_SESSION['id'],$_POST['gameID']);
+
+                $_SESSION['matchID'] = $match;
+                $_SESSION['gameID']=$_POST['gameID'];
+
+                Match::setMatchData($match,"nbTry",$lastMatch->nbTry);
                 echo Controller::json_success($game);
+
               }
+
           }
-        }
-        else echo Controller::json_error("Impossible de trouver ce match");
-      }
-      elseif($_POST['gameID']!=$_SESSION['gameID']){
-        //creer un nouveau match avec le nouveau id_game
-        $match = Match::create($_SESSION['id'],$_POST['gameID']);
+            
 
-        if ($match != null) {
-            $_SESSION['matchID'] = $match;
-            $_SESSION['gameID']=$_POST['gameID'];
-            echo Controller::json_success($game);
+          // Null : le joueur n'a jamais lancé une partie de type gameID
         }else {
-            echo Controller::json_error("Impossible de créer le match");
+            
+            $match = Match::create($_SESSION['id'],$_POST['gameID']);
+
+            if ($match != null) {
+                $_SESSION['matchID'] = $match;
+                $_SESSION['gameID']=$_POST['gameID'];
+                echo Controller::json_success($game);
+            }else {
+                echo Controller::json_error("Impossible de créer le match");
+            }
         }
 
-      }
-      //Si c'est la premiere partie
-      else {
-        $match = Match::create($_SESSION['id'],$_POST['gameID']);
-
-        if ($match != null) {
-            $_SESSION['matchID'] = $match;
-            $_SESSION['gameID']=$_POST['gameID'];
-            echo Controller::json_success($game);
-        }else {
-            echo Controller::json_error("Impossible de créer le match");
-        }
+        // Deux possibilités : 1- le jeu est fermé par l'admin
+        // 2 - Le jeu n'existe pas dans la  base
+      }else {
+          echo Controller::json_error("Ce jeu n'existe plus."); // fermer par l'admin ou une erreur systeme
       }
 
 

@@ -2,8 +2,6 @@
 
 include ('init.php');
 
-
-
   if (!$_SESSION['admin']) {
     include ('header.php');
 ?>
@@ -21,7 +19,7 @@ include ('init.php');
                 <div class="well row pt-3x pb-1x bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
-                    <p>Partie terminée</p>
+                    <p id="partieTerminee">Partie terminée</p>
                     <div id="score"></div>
                   </br>
                     <button  class="btn btn-danger"  id="reload">Nouvelle partie</button>
@@ -35,10 +33,9 @@ include ('init.php');
 
 
         <div id="popup-instructions" class="popup">
-          <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
-                <div class="well row pt-3x pb-1x bk-light">
+                <div class=" row bk-light">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
 
@@ -47,7 +44,7 @@ include ('init.php');
                         <h5>
                         Vous disposez de 3 essais maximum étalés sur 2 heures.</br></br>
 
-                        Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br>
+                        Il y a un compte à rebours pour chaque essai, limitant la durée de jeu à 5 minutes.</br></br>
 
                         Le calcul des scores se fait de cette manière :</br></br>
 
@@ -56,7 +53,7 @@ include ('init.php');
                         - Chaque mot manquant réduit le score de 0.5 point.</br></br>
                         </h5>
 
-                        <button  class="col-md-6 col-md-offset-3 btn btn-info"  id="gotIt">J'ai compris</button>
+                        <button  class="col-md-6 btn btn-info"  id="gotIt">J'ai compris</button>
                         </div>
                         <br>
                       </div>
@@ -77,8 +74,9 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
-                  <div class="col-md-10 col-md-offset-10 mb-2x">
-                    <button id="btn-instructions" class="btn btn-md btn-round"><span class="">?</span></button>
+                  <div class="col-xs-6 mb-2x">
+                    <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
+                    <button  class="btn btn-danger"  id="loadGame">Reprendre partie</button>
                   </div>
                 </div>
                 <div class="row">
@@ -104,7 +102,7 @@ include ('init.php');
                     </div>
                     <div class="row">
                       <div class="col-md-6 col-md-offset-3">
-                        <button id="buttonCheck" class=" btn btn-success mt-2x">Verifier</button>
+                        <button id="buttonCheck" class=" btn btn-info mt-2x">Verifier</button>
                       </div>
                     </div>
                   </div>
@@ -126,15 +124,16 @@ include ('init.php');
 
                         <div class="hr-dashed"></div>
                         <div class="form-group">
-                          <div class="col-sm-8">
+                          <div class="col-xs-8">
                             <select id="choixJeu" class="form-control">
 
                             </select>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="col-xs-4">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
-                          <div id="essais" class="pt-3x"></div>
+
+                          <div id="essais" class=" col-xs-12 col-md-12 pt-3x"></div>
                         </div>
                          <br>
                       </div>
@@ -147,6 +146,9 @@ include ('init.php');
 
     </div>
   </div>
+
+
+  <div class='hidden-timer' > </div>
 
   <!-- Loading Scripts -->
   <script src="js/jquery.min.js"></script>
@@ -164,28 +166,44 @@ include ('init.php');
 
 
   <script>
+
+
     $(function(){
 
-      // end loading -> fonction : appel controlleur.php -> games.php
+
+      if(localStorage.getItem('gameStarted')==1) {
+        $('#loadGame').show();
+        $(".hidden-timer").timer({
+              duration:   '1s',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+              callback:   function() {  // This will execute after the duration has elapsed
+                saveState();
+              },                        // If duration is set, this function is called after `duration` has elapsed
+              countdown: false,
+              repeat:     true,     // If duration is set, `callback` will be called repeatedly
+              format:    '%M:%S'    // Format to show time in
+            });
+      }
+      else{
+      }
       getGameList();
+
 
 //Gestion du pop up
         $('#newGame').on('click', function(){
           startGame();
-          handleTimer();
         });
 
 //Clic sur new game -> show instructions
 //Clic sur got it -> start game
         $('#gotIt').on('click', function(){
-          $('#popup-instructions').removeClass('showMe');
+          $('#popup-instructions').removeClass('slideDown');
           $('#container_jeu').show();
           $('#title').show();
           playTimer();
         });
 
         $('#btn-instructions').on('click',function(){
-          $('#popup-instructions').addClass('showMe');
+          $('#popup-instructions').addClass('slideDown');
           pauseTimer();
           $('#container_jeu').hide();
           $('#title').hide();
@@ -194,12 +212,35 @@ include ('init.php');
         $('#reload').on('click', function(){
               location.reload();
         });
+
+
+
     });
+
+
 
 
     function close_popup(){
         Pblock = $('#popup-view').removeClass('showMe');
     }
+
+/*test local storage
+    if (window.localStorage){ alert('localStorage is supported'); }else
+    {
+    alert('localStorage is not supported');
+    }
+*/
+    window.onbeforeunload = function (e) {
+      var message = "Your confirmation message goes here.",
+      e = e || window.event;
+      // For IE and Firefox
+      if (e) {
+        e.returnValue = message;
+      }
+
+      // For Safari
+      return message;
+    };
 
   </script>
 

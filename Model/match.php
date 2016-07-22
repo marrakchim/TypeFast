@@ -42,9 +42,10 @@ public static function findAll_Matches(){
 return R::findAll(Match::$table_name);
 }
 
-public static function findOnebyUserID_gameID($user_id,$game_id)
+public static function findLastOneByUserID_gameID($user_id,$game_id)
 {
   $var = R::findLast(Match::$table_name, 'id_user = ? and id_game = ?', [$user_id,$game_id]);
+  //$var = R::findOne(Match::$table_name, 'id_user = ? and id_game = ? ORDER BY nb_try DESC', [$user_id,$game_id]);
   return $var;
 }
 
@@ -58,6 +59,12 @@ if (Match::exists($elemen_uuid)) {
 R::trash( Match::findOneById($elemen_uuid) );
 }
 }
+
 }
+
+
+
+
+
 
 ?>

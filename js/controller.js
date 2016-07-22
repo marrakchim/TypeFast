@@ -1,3 +1,38 @@
+/******************************************************************************/
+function loadState()
+{
+  $('#container_jeu').show();
+  $('#title').show();
+  close_popup();
+  $('#timer').html(localStorage.getItem('timer'));
+  var duration =localStorage.getItem('timer') +  's';
+  $("#timer").timer({
+        duration: duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+        callback:   function() {  // This will execute after the duration has elapsed
+            $("#timer").html("");
+            $("#partieTerminee").append("</br>Temps écoulé.");
+            compareText();
+            $("#popup-score").addClass("showMe");
+            $("#container_jeu").hide();
+            $('#title').hide();
+        },                        // If duration is set, this function is called after `duration` has elapsed
+        countdown: true,
+        repeat:     true,     // If duration is set, `callback` will be called repeatedly
+        format:    '%M:%S'    // Format to show time in
+      });
+  convert('jeu', localStorage.getItem('texte'));
+
+}
+
+
+function saveState()
+{
+  localStorage.setItem('timer',$('#timer').data('seconds'));
+  localStorage.setItem('textInput',$('#textInput').val());
+  console.log(localStorage.getItem('timer'));
+}
+
+/******************************************************************************/
 function getUsersHighScores()
 {
   var data = {action : 'user_match_get_all_score'};
@@ -10,7 +45,6 @@ function getUsersHighScores()
 
   request.done(function (data){
     if (data.status === 'success'){
-      console.log(data.response);
        var users=[];
        for(i=0;i<data.response.length; i++){
          var user ={
@@ -48,7 +82,6 @@ function createUserScoreChart(userID)
   request.done(function (data){
     if (data.status === 'success'){
       var scores = data.response;
-      console.log(scores);
 
       var dps = [];
       for(i=0;i<scores.length;i++)
@@ -60,7 +93,6 @@ function createUserScoreChart(userID)
           dps.push(info);
       }
 
-      console.log(dps);
       //Better to construct options first and then pass it as a parameter
     	var options = {
     		title: {
@@ -248,7 +280,6 @@ function compareText()
        else
        {
          var score = calculateScore(countDifferences(textInput,data.response.text," "));
-         console.log(score);
          updateMatchInfo(score);
          //afficher le score sur la page
          $("#score").html(score);
@@ -280,15 +311,18 @@ function calculateScore(nbDifferences)
 
 function countDifferences(a,b, separator)
 {
+  //Transformer un string en chaine de caracteres
   a = a.replace(/\s+/g, " ");
   var arrayA = a.split(separator);
   var arrayB = b.split(separator);
 
   var count;
   var nbDifferences = 0;
+  //Quelle chaine de caracteres est la plus longue
   if(arrayA.length <= arrayB.length)
   {
     count = arrayA.length;
+    //on chope le nombre de differences dans la taille des 2 strings deja
     nbDifferences = arrayB.length-arrayA.length;
   }
   else
@@ -297,6 +331,7 @@ function countDifferences(a,b, separator)
     nbDifferences = arrayA.length-arrayB.length;
   }
 
+  //On compte le nombre de differences
   for (var i=0; i < count; i++)
   {
     if(arrayA[i] != arrayB[i])
@@ -304,6 +339,7 @@ function countDifferences(a,b, separator)
       nbDifferences ++;
     }
   }
+
   return nbDifferences;
 }
 
@@ -313,7 +349,6 @@ function updateMatchInfo(score) {
   var timeEnd = timeNow();
   var timePlayed = 300 - $("#timer").data('seconds');
   var data = {action:'match_update_info',time_played:timePlayed,score:score};
-  console.log(data);
 
   request = $.ajax({
      url:'controller.php',
@@ -329,7 +364,7 @@ function updateMatchInfo(score) {
   });
 
   request.fail(function (xhr, ajaxOptions, thrownError){
-    alert("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
+    console.log("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
   });
 
 }
@@ -342,17 +377,16 @@ function handleTimer() {
   $("#timer").timer({
         duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
-          alert('Time up!');
-          $("#timer").html("");
-          $("#timer").append("Temps écoulé.");
-          document.location.href="userHome.php";
-          compareText();
-          $("#popup-score").addClass("showMe");
-          $("#container_jeu").hide();
-          $('#title').hide();
+            $("#timer").html("");
+            $("#partieTerminee").append("</br>Temps écoulé.");
+            compareText();
+            $("#popup-score").addClass("showMe");
+            $("#container_jeu").hide();
+            $('#title').hide();
+
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
-        repeat:     false,     // If duration is set, `callback` will be called repeatedly
+        repeat:     true,     // If duration is set, `callback` will be called repeatedly
         format:    '%M:%S'    // Format to show time in
       });
 }
@@ -360,7 +394,6 @@ function handleTimer() {
 function pauseTimer()
 {
   $("#timer").timer('pause');
-
 }
 
 function playTimer()
@@ -418,23 +451,36 @@ function startGame()
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
               close_popup();
+              handleTimer();
+              /****/
+              localStorage.setItem('gameStarted',1);
+              var start = localStorage.getItem('gameStarted');
+              console.log(start);
+              /****/
               convert('jeu', data.response.text);
+              localStorage.setItem('texte',data.response.text);
               $("#container_jeu").show();
               $('#title').show();
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
-            $('#essais').html("");
-            $('#essais').append(data.response);
+            
+          // REM : .html(data) :: efface tout et insere le code data
+          //        .append(data) :: Ajoute  
+
+            /*$('#essais').html("");
+            $('#essais').append(data.response);*/
+
+            htmlCodeError = "<div class='alert alert-dismissible alert-danger'><button type='button' class='close' data-dismiss='alert'><i class='fa fa-remove'></i></button>"+data.response+"</div>";
+            $('#essais').html(htmlCodeError);
             $("#essais").show();
         }
+
       });
 
       request.fail(function (xhr, ajaxOptions, thrownError){
-        alert(xhr.statusText);
-        alert(xhr.responseText);
-        alert(xhr.status);
-        alert(thrownError);
+        console.log("Request fail : " + xhr.statusText + xhr.responseText +xhr.status + "thrown error : " + thrownError);
+
       });
 
       $("#choixPartie").on('change',function(){
@@ -450,6 +496,7 @@ function refresh_button_event(element)
       $("#popup-score").addClass("showMe");
       $("#container_jeu").hide();
       $('#title').hide();
+      localStorage.setItem('gameStarted',0);
 
     });
 }
@@ -497,11 +544,20 @@ function manageLogin(){
 
     // Add event listener e
     event_keypress(13, $("#password"),$('#login-btn'));
-
     //event_keypress(13, $("body"),$('#login-btn'));
-
 }
 
+function event_keypress(keycode, input, element)
+{
+  input.keypress(function (e) {
+    var key = e.which;
+    if(key == keycode)  // the enter key code
+    {
+      element.click();
+      return false;
+    }
+  });
+}
 
 function event_keypress(keycode, input, element)
 {
@@ -519,9 +575,8 @@ function event_keypress(keycode, input, element)
 
 
 
-function manageRegistration (admin){
 
-  console.log("registration");
+function manageRegistration (admin){
 
     //Quand on clique sur le bouton du formulaire
     $('#registration').on('click', function(e) {
@@ -681,7 +736,7 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
       y: 0,
       fill: '#000000',
       width:400,
-      fontFamily: "roboto light",
+      fontFamily: "roboto-light",
       fontSize: 16,
       fill: '#000000',
       align: 'left',
