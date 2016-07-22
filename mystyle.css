@@ -70,7 +70,7 @@ textarea
 	width:100%;
 }
 
-#container_jeu, #title, #essais
+#container_jeu, #title, #essais, #loadGame
 {
 	display:none;
 }

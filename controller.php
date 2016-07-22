@@ -137,7 +137,7 @@ Class Controller{
               }
           }
         }
-        else echo Controller::json_error("Impossible de trouver ce match");
+        else echo Controller::json_error("Pas de match");
       }
       //Si c'est la premiere partie
       else {

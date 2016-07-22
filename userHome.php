@@ -74,8 +74,9 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
-                  <div class="col-xs-10 col-xs-offset-10 mb-2x">
+                  <div class="col-xs-6 mb-2x">
                     <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
+                    <button  class="btn btn-danger"  id="loadGame">Reprendre partie</button>
                   </div>
                 </div>
                 <div class="row">
@@ -123,14 +124,15 @@ include ('init.php');
 
                         <div class="hr-dashed"></div>
                         <div class="form-group">
-                          <div class="col-sm-8">
+                          <div class="col-xs-8">
                             <select id="choixJeu" class="form-control">
 
                             </select>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="col-xs-4">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
+
                           <div id="essais" class="pt-3x"></div>
                         </div>
                          <br>
@@ -144,6 +146,9 @@ include ('init.php');
 
     </div>
   </div>
+
+
+  <div class='hidden-timer' > </div>
 
   <!-- Loading Scripts -->
   <script src="js/jquery.min.js"></script>
@@ -166,47 +171,21 @@ include ('init.php');
     $(function(){
 
 
-
-
-      if(localStorage.getItem('gameStarted')==1)
-      {
-        $('#container_jeu').show();
-        $('#title').show();
-        close_popup();
-        console.log('=> '+localStorage.getItem('timer'));
-        $('#timer').html(localStorage.getItem('timer'));
-        var duration =localStorage.getItem('timer') +  's';
-
-        $("#timer").timer({
-              //seconds : parseInt(localStorage.getItem('timer')),
-              duration: duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+      if(localStorage.getItem('gameStarted')==1) {
+        $('#loadGame').show();
+        $(".hidden-timer").timer({
+              duration:   '1s',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
               callback:   function() {  // This will execute after the duration has elapsed
-                console.log("tick");
-
-                if($('#timer').data('seconds')==0)
-                {
-                  $("#timer").html("");
-                  $("#partieTerminee").append("</br>Temps écoulé.");
-                  compareText();
-                  $("#popup-score").addClass("showMe");
-                  $("#container_jeu").hide();
-                  $('#title').hide();
-                }
-                else {
-                  localStorage.setItem('timer',$('#timer').data('seconds'));
-                }
+                saveState();
               },                        // If duration is set, this function is called after `duration` has elapsed
-              countdown: true,
+              countdown: false,
               repeat:     true,     // If duration is set, `callback` will be called repeatedly
               format:    '%M:%S'    // Format to show time in
             });
-        playTimer();
       }
-      else {
-        // end loading -> fonction : appel controlleur.php -> games.php
-        getGameList();
+      else{
       }
-
+      getGameList();
 
 
 //Gestion du pop up

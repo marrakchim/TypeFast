@@ -1,3 +1,38 @@
+/******************************************************************************/
+function loadState()
+{
+  $('#container_jeu').show();
+  $('#title').show();
+  close_popup();
+  $('#timer').html(localStorage.getItem('timer'));
+  var duration =localStorage.getItem('timer') +  's';
+  $("#timer").timer({
+        duration: duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+        callback:   function() {  // This will execute after the duration has elapsed
+            $("#timer").html("");
+            $("#partieTerminee").append("</br>Temps écoulé.");
+            compareText();
+            $("#popup-score").addClass("showMe");
+            $("#container_jeu").hide();
+            $('#title').hide();
+        },                        // If duration is set, this function is called after `duration` has elapsed
+        countdown: true,
+        repeat:     true,     // If duration is set, `callback` will be called repeatedly
+        format:    '%M:%S'    // Format to show time in
+      });
+  convert('jeu', localStorage.getItem('texte'));
+
+}
+
+
+function saveState()
+{
+  localStorage.setItem('timer',$('#timer').data('seconds'));
+  localStorage.setItem('textInput',$('#textInput').val());
+  console.log(localStorage.getItem('timer'));
+}
+
+/******************************************************************************/
 function getUsersHighScores()
 {
   var data = {action : 'user_match_get_all_score'};
@@ -342,20 +377,12 @@ function handleTimer() {
   $("#timer").timer({
         duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
-          console.log("tick");
-
-          if($('#timer').data('seconds')==0)
-          {
             $("#timer").html("");
             $("#partieTerminee").append("</br>Temps écoulé.");
             compareText();
             $("#popup-score").addClass("showMe");
             $("#container_jeu").hide();
             $('#title').hide();
-          }
-          else {
-            localStorage.setItem('timer',$('#timer').data('seconds'));
-          }
 
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
@@ -431,6 +458,7 @@ function startGame()
               console.log(start);
               /****/
               convert('jeu', data.response.text);
+              localStorage.setItem('texte',data.response.text);
               $("#container_jeu").show();
               $('#title').show();
               refresh_button_event($("#buttonCheck"));
