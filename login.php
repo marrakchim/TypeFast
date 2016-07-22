@@ -1,11 +1,8 @@
 <?php
-if(isset($_SESSION['login'])){
-		unset($_SESSION['id']);
-		unset($_SESSION['admin']);
-		unset($_SESSION['login']);
-		unset($_SESSION['password']);
-		unset($_SESSION['username']);
-}
+
+	include ('init.php');
+
+	session_destroy();
 ?>
 
 <!doctype html>
@@ -92,10 +89,10 @@ if(isset($_SESSION['login'])){
 
 
 	<script>
-				$(function(){
-						manageLogin();
+		$(function(){
+			manageLogin();
 
-				});
+		});
 	</script>
 
 

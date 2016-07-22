@@ -1,10 +1,9 @@
 <?php
-session_start(); 
 
-// Suppression des variables de session et de la session
-$_SESSION = array();
+include ('init.php'); 
+
 session_destroy();
 
-
 header('location:login.php');
+
 ?>

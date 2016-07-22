@@ -495,7 +495,27 @@ function manageLogin(){
       hideError();
     });
 
+    // Add event listener e
+    event_keypress(13, $("#password"),$('#login-btn'));
+
+    //event_keypress(13, $("body"),$('#login-btn'));
+
 }
+
+
+function event_keypress(keycode, input, element)
+{
+  input.keypress(function (e) {
+    var key = e.which;
+    if(key == keycode)  // the enter key code
+    {
+      element.click();
+      return false;
+    }
+  });
+}
+
+/*******/
 
 
 
