@@ -161,21 +161,53 @@ include ('init.php');
 
 
   <script>
+
+
     $(function(){
 
-      if(localStorage.getItem('gameStarted'))
+
+
+
+      if(localStorage.getItem('gameStarted')==1)
       {
         $('#container_jeu').show();
         $('#title').show();
         close_popup();
-        console.log(localStorage.getItem('timer'));
+        console.log('=> '+localStorage.getItem('timer'));
         $('#timer').html(localStorage.getItem('timer'));
-        $('#timer').show();
+        var duration =localStorage.getItem('timer') +  's';
+
+        $("#timer").timer({
+              //seconds : parseInt(localStorage.getItem('timer')),
+              duration: duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+              callback:   function() {  // This will execute after the duration has elapsed
+                console.log("tick");
+
+                if($('#timer').data('seconds')==0)
+                {
+                  $("#timer").html("");
+                  $("#partieTerminee").append("</br>Temps écoulé.");
+                  compareText();
+                  $("#popup-score").addClass("showMe");
+                  $("#container_jeu").hide();
+                  $('#title').hide();
+                }
+                else {
+                  localStorage.setItem('timer',$('#timer').data('seconds'));
+                }
+              },                        // If duration is set, this function is called after `duration` has elapsed
+              countdown: true,
+              repeat:     true,     // If duration is set, `callback` will be called repeatedly
+              format:    '%M:%S'    // Format to show time in
+            });
         playTimer();
       }
+      else {
+        // end loading -> fonction : appel controlleur.php -> games.php
+        getGameList();
+      }
 
-      // end loading -> fonction : appel controlleur.php -> games.php
-      getGameList();
+
 
 //Gestion du pop up
         $('#newGame').on('click', function(){
@@ -202,9 +234,7 @@ include ('init.php');
               location.reload();
         });
 
-        console.log($('#timer').data('seconds'));
 
-        localStorage.setItem('timer',$('#timer').data('seconds'));
 
     });
 
@@ -221,7 +251,17 @@ include ('init.php');
     alert('localStorage is not supported');
     }
 */
+    window.onbeforeunload = function (e) {
+      var message = "Your confirmation message goes here.",
+      e = e || window.event;
+      // For IE and Firefox
+      if (e) {
+        e.returnValue = message;
+      }
 
+      // For Safari
+      return message;
+    };
 
   </script>
 

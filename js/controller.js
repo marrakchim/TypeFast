@@ -342,15 +342,24 @@ function handleTimer() {
   $("#timer").timer({
         duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
-          $("#timer").html("");
-          $("#partieTerminee").append("</br>Temps écoulé.");
-          compareText();
-          $("#popup-score").addClass("showMe");
-          $("#container_jeu").hide();
-          $('#title').hide();
+          console.log("tick");
+
+          if($('#timer').data('seconds')==0)
+          {
+            $("#timer").html("");
+            $("#partieTerminee").append("</br>Temps écoulé.");
+            compareText();
+            $("#popup-score").addClass("showMe");
+            $("#container_jeu").hide();
+            $('#title').hide();
+          }
+          else {
+            localStorage.setItem('timer',$('#timer').data('seconds'));
+          }
+
         },                        // If duration is set, this function is called after `duration` has elapsed
         countdown: true,
-        repeat:     false,     // If duration is set, `callback` will be called repeatedly
+        repeat:     true,     // If duration is set, `callback` will be called repeatedly
         format:    '%M:%S'    // Format to show time in
       });
 }
@@ -417,7 +426,7 @@ function startGame()
               close_popup();
               handleTimer();
               /****/
-              localStorage.setItem('gameStarted','yes');
+              localStorage.setItem('gameStarted',1);
               var start = localStorage.getItem('gameStarted');
               console.log(start);
               /****/
@@ -451,6 +460,7 @@ function refresh_button_event(element)
       $("#popup-score").addClass("showMe");
       $("#container_jeu").hide();
       $('#title').hide();
+      localStorage.setItem('gameStarted',0);
 
     });
 }
