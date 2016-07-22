@@ -416,6 +416,11 @@ function startGame()
         if (data.status === 'success'){
               close_popup();
               handleTimer();
+              /****/
+              localStorage.setItem('gameStarted','yes');
+              var start = localStorage.getItem('gameStarted');
+              console.log(start);
+              /****/
               convert('jeu', data.response.text);
               $("#container_jeu").show();
               $('#title').show();
@@ -491,6 +496,20 @@ function manageLogin(){
       hideError();
     });
 
+    event_keypress(13, $("#password"),$('#login-btn'));
+
+}
+
+function event_keypress(keycode, input, element)
+{
+  input.keypress(function (e) {
+    var key = e.which;
+    if(key == keycode)  // the enter key code
+    {
+      element.click();
+      return false;
+    }
+  });
 }
 
 

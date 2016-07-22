@@ -74,7 +74,7 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x">
                 <div class="row">
-                  <div class="col-md-10 col-md-offset-10 mb-2x">
+                  <div class="col-xs-10 col-xs-offset-10 mb-2x">
                     <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
                   </div>
                 </div>
@@ -163,6 +163,17 @@ include ('init.php');
   <script>
     $(function(){
 
+      if(localStorage.getItem('gameStarted'))
+      {
+        $('#container_jeu').show();
+        $('#title').show();
+        close_popup();
+        console.log(localStorage.getItem('timer'));
+        $('#timer').html(localStorage.getItem('timer'));
+        $('#timer').show();
+        playTimer();
+      }
+
       // end loading -> fonction : appel controlleur.php -> games.php
       getGameList();
 
@@ -190,6 +201,11 @@ include ('init.php');
         $('#reload').on('click', function(){
               location.reload();
         });
+
+        console.log($('#timer').data('seconds'));
+
+        localStorage.setItem('timer',$('#timer').data('seconds'));
+
     });
 
 
