@@ -1,3 +1,30 @@
+/* General style */
+
+.block-login, .block-register {
+	margin : 7px 5px;
+}
+
+
+.block-match {
+	margin : 7px;
+}
+
+
+
+
+
+@media screen and (max-width: 480px) and (max-height: 760px) {
+
+  		#newGame {
+			margin-top: 10px;
+		}
+
+}
+
+
+
+
+/* Element style */
 .popup {
 	margin-top: 25px;
 	display: none;

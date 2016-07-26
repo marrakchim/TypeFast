@@ -9,6 +9,10 @@ include ('init.php');
 
 <title>TypeFast - <?php echo $_SESSION['login']; ?> </title>
 
+<!-- FlipClock resources -->
+<link rel="stylesheet" href="lib/flipclock/flipclock.css">
+<!-- end flip resources -->
+
   <div id="container-general" class="content-wrapper">
     <div class="container-fluid">
 
@@ -16,7 +20,7 @@ include ('init.php');
           <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
-                <div class="well row pt-3x pb-1x bk-light">
+                <div class="well row pt-3x pb-1x bk-light block-match">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
                     <p id="partieTerminee">Partie terminée</p>
@@ -36,7 +40,7 @@ include ('init.php');
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-2">
                 <div class=" row bk-light">
-                  <div class="text-center text-dark">
+                  <div class="text-center text-dark block-match">
                   <div class="jumbotron">
 
                     <h1>Instructions</h1>
@@ -72,7 +76,7 @@ include ('init.php');
 
         <div class="row">
           <div class="col-md-8 col-md-offset-1">
-              <div id="container_jeu" class="well pt-3x pb-3x">
+              <div id="container_jeu" class="well pt-3x pb-3x block-match">
                 <div class="row">
                   <div class="col-xs-6 mb-2x">
                     <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
@@ -115,7 +119,7 @@ include ('init.php');
           <div class="overflow"></div>
           <div class="row modal-pop">
             <div class="col-md-6 col-md-offset-3">
-                <div class="well row pt-3x pb-1x bk-light">
+                <div class="well row pt-3x pb-1x bk-light block-match">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
                     <h1>TypeFast</h1>
@@ -124,12 +128,12 @@ include ('init.php');
 
                         <div class="hr-dashed"></div>
                         <div class="form-group">
-                          <div class="col-xs-8">
+                          <div class="col-md-8 col-xs-12">
                             <select id="choixJeu" class="form-control">
 
                             </select>
                           </div>
-                          <div class="col-xs-4">
+                          <div class="col-md-4 col-xs-12">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
 
@@ -164,11 +168,21 @@ include ('init.php');
   <script src="js/timer.jquery.js"></script>
   <script src="js/controller.js"></script>
 
+  <script src="lib/flipclock/flipclock.min.js"></script>
+
 
   <script>
 
 
     $(function(){
+
+
+      /* 
+      var clock = $('#timer2').FlipClock({
+      // ... your options here
+      });*/
+
+      
 
 
       if(localStorage.getItem('gameStarted')==1) {
@@ -185,16 +199,17 @@ include ('init.php');
       }
       else{
       }
+
       getGameList();
 
 
-//Gestion du pop up
+        //Gestion du pop up
         $('#newGame').on('click', function(){
-          startGame();
+            startGame();
         });
 
-//Clic sur new game -> show instructions
-//Clic sur got it -> start game
+        //Clic sur new game -> show instructions
+        //Clic sur got it -> start game
         $('#gotIt').on('click', function(){
           $('#popup-instructions').removeClass('slideDown');
           $('#container_jeu').show();
