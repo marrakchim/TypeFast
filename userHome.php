@@ -78,8 +78,10 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x block-match">
                 <div class="row">
-                  <div class="col-xs-8 mb-2x">
+                  <div id='errorDiv'></div>
+                  <div class="col-xs-12 col-xs-offset-8 mb-2x">
                     <button id="btn-instructions" title="Instructions" class="btn btn-success btn-round"><i class="fa fa-question"></i></button>
+                    <button id="btn_nouvelle_partie" title="Nouvelle partie" class="btn btn-danger btn-round"><i class="glyphicon glyphicon-home"></i></button>
                   </div>
                 </div>
                     <div class="row">
@@ -115,7 +117,7 @@ include ('init.php');
                 <div class="well row pt-3x pb-1x bk-light block-match">
                   <div class="text-center text-dark">
                   <div class="jumbotron">
-                    <h1>TypeFast</h1>
+                    <h1 class='titre-page'>TypeFast</h1>
                       <div id="choixPartie">
                         <p>Veuillez choisir une partie </p>
 
@@ -128,9 +130,7 @@ include ('init.php');
                           </div>
                           <div class="col-md-4 col-xs-12">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
-                             <button id="loadGame" title="Reprendre partie" class="btn btn-danger btn-round"><i class="fa fa-rotate-left "></i></button>
                           </div>
-
                           <div id="essais" class=" col-xs-12 col-md-12 pt-3x"></div>
                         </div>
                          <br>
@@ -169,8 +169,21 @@ include ('init.php');
 
     $(function(){
 
+
+      $('#btn_nouvelle_partie').on('click', function(){
+          localStorage.setItem('gameStarted',0);
+          localStorage.setItem('timer',300);
+
+          $('#container_jeu').hide();
+          $('#title').hide();
+          $('#popup-view').addClass('showMe');
+          getGameList();
+          $('.hidden-timer').timer('pause');
+          deleteLastMatch();
+
+      });
+
       if(localStorage.getItem('gameStarted')==1) {
-        $('#loadGame').show();
         $(".hidden-timer").timer({
               duration:   '1s',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
               callback:   function() {  // This will execute after the duration has elapsed
@@ -180,11 +193,14 @@ include ('init.php');
               repeat:     true,     // If duration is set, `callback` will be called repeatedly
               format:    '%M:%S'    // Format to show time in
             });
+        $('.hidden-timer').timer('resume');
+        loadState();
       }
       else{
+        getGameList();
       }
 
-      getGameList();
+
 
 
         //Gestion du pop up
@@ -209,7 +225,8 @@ include ('init.php');
         });
 
         $('#reload').on('click', function(){
-              location.reload();
+          $('#popup-score').hide();
+          location.reload();
         });
 
 
@@ -223,23 +240,6 @@ include ('init.php');
         Pblock = $('#popup-view').removeClass('showMe');
     }
 
-/*test local storage
-    if (window.localStorage){ alert('localStorage is supported'); }else
-    {
-    alert('localStorage is not supported');
-    }
-*/
-    window.onbeforeunload = function (e) {
-      var message = "Your confirmation message goes here.",
-      e = e || window.event;
-      // For IE and Firefox
-      if (e) {
-        e.returnValue = message;
-      }
-
-      // For Safari
-      return message;
-    };
 
   </script>
 

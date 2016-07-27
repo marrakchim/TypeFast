@@ -1,26 +1,39 @@
 /******************************************************************************/
+
+function deleteLastMatch()
+{
+  var data = {action : 'match_delete_last'};
+
+  request = $.ajax({
+     url:'controller.php',
+     type: "POST",
+     data: data,
+  });
+
+  request.done(function (data){
+    if (data.status === 'success'){
+       console.log(data.response);
+      }
+    else if(data.status === 'error'){
+        console.log(data.response);
+    }
+  });
+
+  request.fail(function (status, thrown){
+      console.error(
+          "Erreur d'execution de la requête: "+
+          status, thrown
+      );
+  });
+}
+
+/******************************************************************************/
 function loadState()
 {
-  $('#container_jeu').show();
-  $('#title').show();
-  close_popup();
-  $('#timer').html(localStorage.getItem('timer'));
-  var duration =localStorage.getItem('timer') +  's';
-  $("#timer").timer({
-        duration: duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
-        callback:   function() {  // This will execute after the duration has elapsed
-            $("#timer").html("");
-            $("#partieTerminee").append("</br>Temps écoulé.");
-            compareText();
-            $("#popup-score").addClass("showMe");
-            $("#container_jeu").hide();
-            $('#title').hide();
-        },                        // If duration is set, this function is called after `duration` has elapsed
-        countdown: true,
-        repeat:     true,     // If duration is set, `callback` will be called repeatedly
-        format:    '%M:%S'    // Format to show time in
-      });
-  convert('jeu', localStorage.getItem('texte'));
+  if(localStorage.getItem('timer')<=0) endGame();
+  else {
+    setupGame(localStorage.getItem('texte'),localStorage.getItem('timer'));
+  }
 
 }
 
@@ -29,7 +42,6 @@ function saveState()
 {
   localStorage.setItem('timer',$('#timer').data('seconds'));
   localStorage.setItem('textInput',$('#textInput').val());
-  console.log(localStorage.getItem('timer'));
 }
 
 /******************************************************************************/
@@ -253,6 +265,10 @@ function adminNewGame()
 
 /***********************************************************************************************/
 
+
+
+/***********************************************************************************************/
+
 function compareText()
 {
   // Max 100 points
@@ -267,7 +283,6 @@ function compareText()
 
   request.done(function (data){
     if (data.status === 'success'){
-       console.log(data.response);
        var textInput = $("#textInput").val();
        //verifier que l'input n'est pas vide
        if(textInput == "")
@@ -279,10 +294,15 @@ function compareText()
        }
        else
        {
-         var score = calculateScore(countDifferences(textInput,data.response.text," "));
+         var score = calculateScore(textInput,data.response.text," ");
          updateMatchInfo(score);
          //afficher le score sur la page
          $("#score").html(score);
+         $("#popup-score").addClass("showMe");
+         $("#container_jeu").hide();
+         $('#title').hide();
+         $('#popup-view').hide();
+         localStorage.setItem('gameStarted',0);
 
        }
     }
@@ -301,16 +321,10 @@ function compareText()
 }
 
 
-
-function calculateScore(nbDifferences)
+function calculateScore(a,b, separator)
 {
-  var score=100 - nbDifferences*0.5;
-  if(score<0) score=0;
-  return score;
-}
-
-function countDifferences(a,b, separator)
-{
+  //a : text input
+  //b : texte initial
   //Transformer un string en chaine de caracteres
   a = a.replace(/\s+/g, " ");
   var arrayA = a.split(separator);
@@ -339,8 +353,19 @@ function countDifferences(a,b, separator)
       nbDifferences ++;
     }
   }
+  if(arrayA.length <= arrayB.length/2){
+    var score=50 - nbDifferences*0.5;
+    if(score<0) score=0;
+    return score;
+  }
+  else {
+    var score=100 - nbDifferences*0.5;
+    if(score<0) score=0;
+    return score;
+  }
 
-  return nbDifferences;
+
+
 }
 
 /***********************************************************************************************/
@@ -372,10 +397,11 @@ function updateMatchInfo(score) {
 
 /***********************************************************************************************/
 
-function handleTimer() {
+function handleTimer(duration) {
+
 
   $("#timer").timer({
-        duration:   '5m',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+        duration:   duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
             $("#timer").html("");
             $("#partieTerminee").append("</br>Temps écoulé.");
@@ -436,6 +462,20 @@ function getGameList()
   });
 }
 
+function setupGame(jeu,duration)
+{
+  close_popup();
+  handleTimer(duration);
+  /****/
+  localStorage.setItem('gameStarted',1);
+  /****/
+  convert('jeu',jeu);
+  localStorage.setItem('texte',jeu);
+  $("#container_jeu").show();
+  $('#title').show();
+  refresh_button_event($("#buttonCheck"));
+}
+
 function startGame()
 {
       var selection = $("#choixJeu").find(":selected").data("uuid");
@@ -450,18 +490,9 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
-              close_popup();
-              handleTimer();
-              /****/
-              localStorage.setItem('gameStarted',1);
-              var start = localStorage.getItem('gameStarted');
-              console.log(start);
-              /****/
-              convert('jeu', data.response.text);
-              localStorage.setItem('texte',data.response.text);
-              $("#container_jeu").show();
-              $('#title').show();
-              refresh_button_event($("#buttonCheck"));
+          setupGame(data.response.text,'5m');
+          localStorage.setItem('timer',300);
+
         }
         else if(data.status === 'error'){
 
@@ -489,15 +520,18 @@ function startGame()
 
 }
 
+function endGame()
+{
+  compareText();
+  localStorage.setItem('gameStarted',0);
+
+
+}
+
 function refresh_button_event(element)
 {
     element.on('click', function(){
-      compareText();
-      $("#popup-score").addClass("showMe");
-      $("#container_jeu").hide();
-      $('#title').hide();
-      localStorage.setItem('gameStarted',0);
-
+      endGame();
     });
 }
 

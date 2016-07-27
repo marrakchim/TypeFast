@@ -55,10 +55,11 @@ return $var != NULL;
 }
 
 public static function delete($elemen_uuid){
-if (Match::exists($elemen_uuid)) {
-R::trash( Match::findOneById($elemen_uuid) );
+  if (Match::exists($elemen_uuid)) {
+  R::trash( Match::findOneById($elemen_uuid) );
+  }
 }
-}
+
 }
 
 ?>

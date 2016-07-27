@@ -46,10 +46,15 @@
 }
 
 .titre-page{
-	font-size:36px;
+	font-size:42px;
 	margin-bottom:20px;
-	margin-left:35px;
+	font-family:"fast";
+}
 
+#container-general
+{
+	padding-left:20px;
+	padding-right:20px;
 }
 
 .popup .modal-pop{
@@ -223,4 +228,9 @@ textarea
 @font-face{
 	font-family:'roboto';
   src: url('../inspire/fonts/Roboto-light.ttf');
+}
+
+@font-face{
+	font-family:'fast';
+  src: url('../inspire/fonts/barbatrick.ttf');
 }

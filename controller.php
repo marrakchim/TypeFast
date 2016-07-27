@@ -58,6 +58,9 @@ if(isset($_POST['action']) && $_POST['action']!= null)
       case 'game_new_game':
         Controller::game_new_game();
         break;
+      case 'match_delete_last':
+        Controller:match_delete_last();
+        break;
 
     }
 
@@ -199,6 +202,16 @@ Class Controller{
     }
     else echo Controller::json_error("Erreur isset");
 
+    }
+
+    public function match_delete_last()
+    {
+      try {
+        Match::delete($_SESSION['matchID']);
+        echo Controller::json_success($user);
+        } catch (Exception $e) {
+        echo Controller::json_error("Impossible de supprimer ce match");
+      }
     }
     /***********************************************************************************************/
 
