@@ -9,22 +9,27 @@
 	margin : 7px;
 }
 
-
-
-
-
 @media screen and (max-width: 480px) and (max-height: 760px) {
 
-  		#newGame {
+  	#newGame {
 			margin-top: 10px;
 		}
 
 }
 
-
-
-
 /* Element style */
+
+#timer
+{
+	font-size:70px;
+	font-family: "digital-clock", Helvetica, sans-serif;
+	color: #38e9fb;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9);
+	background: #f8f5f0;
+	border : 3px none solid;
+	border-radius: 10px;
+}
+
 .popup {
 	margin-top: 25px;
 	display: none;
@@ -40,9 +45,11 @@
 	background: rgba(0,0,0,0.9);
 }
 
-.textSize
-{
-	font-size:16;
+.titre-page{
+	font-size:36px;
+	margin-bottom:20px;
+	margin-left:35px;
+
 }
 
 .popup .modal-pop{
@@ -84,7 +91,6 @@
 body
 {
 	background-color: #edfcf7;
-	font-family: "roboto-light";
 }
 
 textarea
@@ -102,17 +108,16 @@ textarea
 	display:none;
 }
 
-#timer
-{
-	font-family: "roboto";
-	font-size:16;
-}
+
 
 #textInput
 {
 	border-radius : 10px;
 	border:none;
+	width:100%;
 }
+
+/* Animations */
 
 .showMe {
 	display: block!important;
@@ -206,4 +211,16 @@ textarea
         opacity:1;
         display: none;
     }
+}
+
+/* Polices */
+
+@font-face{
+ 	font-family:'digital-clock';
+ 	src: url('../inspire/fonts/digital-7.ttf');
+ }
+
+@font-face{
+	font-family:'roboto';
+  src: url('../inspire/fonts/Roboto-light.ttf');
 }

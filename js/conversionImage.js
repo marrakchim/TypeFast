@@ -19,7 +19,7 @@ function convertAdmin()
     x: 0,
     y: 0,
     fill: '#000000',
-    width:400,
+    width:500,
     fontFamily: "Arial",
     fontSize: 14,
     fill: '#000000',

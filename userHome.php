@@ -70,7 +70,7 @@ include ('init.php');
 
         <div id="title" class="col-md-10 col-md-offset-1" >
           <div class="row">
-            <h2 class="mb-2x">TypeFast </h2>
+            <h2 class="titre-page">TypeFast </h2>
           </div>
         </div>
 
@@ -78,34 +78,27 @@ include ('init.php');
           <div class="col-md-8 col-md-offset-1">
               <div id="container_jeu" class="well pt-3x pb-3x block-match">
                 <div class="row">
-                  <div class="col-xs-6 mb-2x">
-                    <button id="btn-instructions" title="Instructions" class="btn btn-success btn-md btn-round"><span class="">?</span></button>
-                    <button  class="btn btn-danger"  id="loadGame">Reprendre partie</button>
+                  <div class="col-xs-8 mb-2x">
+                    <button id="btn-instructions" title="Instructions" class="btn btn-success btn-round"><i class="fa fa-question"></i></button>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-10 col-md-offset-3 ">
-                    <div class="row mb-2x">
-                      <div class="col-md-4 text-center ">
-                        <p class="text-center text-dark textSize">Temps restant</p>
-                      </div>
-                      <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-xs-8 col-xs-offset-2">
                         <div id="timer" class="text-center text-dark"></div>
                       </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-8 col-xs-offset-2">
+                        <div id="jeu" class="text-center" style=" padding-left:10px";></div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6 col-md-offset-3">
-                        <div id="jeu" class="text-center"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 col-md-offset-3">
+                      <div class="col-xs-8 col-xs-offset-2">
                         <textarea id="textInput"  class="centre mt-2x"></textarea>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6 col-md-offset-3">
+                      <div class="col-xs-8 col-xs-offset-2">
                         <button id="buttonCheck" class=" btn btn-info mt-2x">Verifier</button>
                       </div>
                     </div>
@@ -135,6 +128,7 @@ include ('init.php');
                           </div>
                           <div class="col-md-4 col-xs-12">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
+                             <button id="loadGame" title="Reprendre partie" class="btn btn-danger btn-round"><i class="fa fa-rotate-left "></i></button>
                           </div>
 
                           <div id="essais" class=" col-xs-12 col-md-12 pt-3x"></div>
@@ -152,7 +146,7 @@ include ('init.php');
   </div>
 
 
-  <div class='hidden-timer' > </div>
+  <div class='hidden-timer' style="display:none"> </div>
 
   <!-- Loading Scripts -->
   <script src="js/jquery.min.js"></script>
@@ -168,22 +162,12 @@ include ('init.php');
   <script src="js/timer.jquery.js"></script>
   <script src="js/controller.js"></script>
 
-  <script src="lib/flipclock/flipclock.min.js"></script>
 
 
   <script>
 
 
     $(function(){
-
-
-      /* 
-      var clock = $('#timer2').FlipClock({
-      // ... your options here
-      });*/
-
-      
-
 
       if(localStorage.getItem('gameStarted')==1) {
         $('#loadGame').show();

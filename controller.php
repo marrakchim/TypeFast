@@ -108,7 +108,7 @@ Class Controller{
         if ($lastMatch != null)
         {
 
-          // Si le nombre <3 
+          // Si le nombre <3
           if ($lastMatch->nbTry < 3) {
 
               $match = Match::create($_SESSION['id'],$_POST['gameID']);
@@ -144,11 +144,11 @@ Class Controller{
               }
 
           }
-            
+
 
           // Null : le joueur n'a jamais lancé une partie de type gameID
         }else {
-            
+
             $match = Match::create($_SESSION['id'],$_POST['gameID']);
 
             if ($match != null) {
@@ -159,14 +159,11 @@ Class Controller{
                 echo Controller::json_error("Impossible de créer le match");
             }
         }
-
         // Deux possibilités : 1- le jeu est fermé par l'admin
         // 2 - Le jeu n'existe pas dans la  base
       }else {
           echo Controller::json_error("Ce jeu n'existe plus."); // fermer par l'admin ou une erreur systeme
       }
-
-
     }
 
     public function game_get_list(){

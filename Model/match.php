@@ -59,12 +59,6 @@ if (Match::exists($elemen_uuid)) {
 R::trash( Match::findOneById($elemen_uuid) );
 }
 }
-
 }
-
-
-
-
-
 
 ?>

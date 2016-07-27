@@ -464,9 +464,9 @@ function startGame()
               refresh_button_event($("#buttonCheck"));
         }
         else if(data.status === 'error'){
-            
+
           // REM : .html(data) :: efface tout et insere le code data
-          //        .append(data) :: Ajoute  
+          //        .append(data) :: Ajoute
 
             /*$('#essais').html("");
             $('#essais').append(data.response);*/
@@ -735,7 +735,7 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
       x: 0,
       y: 0,
       fill: '#000000',
-      width:400,
+      width:500,
       fontFamily: "roboto-light",
       fontSize: 16,
       fill: '#000000',
