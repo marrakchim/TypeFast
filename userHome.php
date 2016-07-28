@@ -171,8 +171,8 @@ include ('init.php');
 
 
       $('#btn_nouvelle_partie').on('click', function(){
-          localStorage.setItem('gameStarted',0);
-          localStorage.setItem('timer',300);
+          
+          resetLocalStorage();
 
           $('#container_jeu').hide();
           $('#title').hide();
@@ -184,15 +184,7 @@ include ('init.php');
       });
 
       if(localStorage.getItem('gameStarted')==1) {
-        $(".hidden-timer").timer({
-              duration:   '1s',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
-              callback:   function() {  // This will execute after the duration has elapsed
-                saveState();
-              },                        // If duration is set, this function is called after `duration` has elapsed
-              countdown: false,
-              repeat:     true,     // If duration is set, `callback` will be called repeatedly
-              format:    '%M:%S'    // Format to show time in
-            });
+        timerStartRefresh();
         $('.hidden-timer').timer('resume');
         loadState();
       }
@@ -201,40 +193,35 @@ include ('init.php');
       }
 
 
+      //Gestion du pop up
+      $('#newGame').on('click', function(){
+          startGame();
+      });
 
+      //Clic sur new game -> show instructions
+      //Clic sur got it -> start game
+      $('#gotIt').on('click', function(){
+        $('#popup-instructions').removeClass('slideDown');
+        $('#container_jeu').show();
+        $('#title').show();
+        playTimer();
+      });
 
-        //Gestion du pop up
-        $('#newGame').on('click', function(){
-            startGame();
-        });
+      $('#btn-instructions').on('click',function(){
+        $('#popup-instructions').addClass('slideDown');
+        pauseTimer();
+        $('#container_jeu').hide();
+        $('#title').hide();
+      });
 
-        //Clic sur new game -> show instructions
-        //Clic sur got it -> start game
-        $('#gotIt').on('click', function(){
-          $('#popup-instructions').removeClass('slideDown');
-          $('#container_jeu').show();
-          $('#title').show();
-          playTimer();
-        });
-
-        $('#btn-instructions').on('click',function(){
-          $('#popup-instructions').addClass('slideDown');
-          pauseTimer();
-          $('#container_jeu').hide();
-          $('#title').hide();
-        });
-
-        $('#reload').on('click', function(){
-          $('#popup-score').hide();
-          location.reload();
-        });
+      $('#reload').on('click', function(){
+        $('#popup-score').hide();
+        location.reload();
+      });
 
 
 
     });
-
-
-
 
     function close_popup(){
         Pblock = $('#popup-view').removeClass('showMe');

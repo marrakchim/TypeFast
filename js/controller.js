@@ -32,16 +32,41 @@ function loadState()
 {
   if(localStorage.getItem('timer')<=0) endGame();
   else {
+    // setup game
     setupGame(localStorage.getItem('texte'),localStorage.getItem('timer'));
+    // relaod last text
+    $('#textInput').val(localStorage.getItem('textInput'));
   }
 
 }
-
 
 function saveState()
 {
   localStorage.setItem('timer',$('#timer').data('seconds'));
   localStorage.setItem('textInput',$('#textInput').val());
+  console.log("call : saveState");
+}
+
+
+function resetLocalStorage()
+{
+    localStorage.setItem('gameStarted',0);
+    localStorage.setItem('textInput', '');
+    localStorage.setItem('texte', '');
+    localStorage.setItem('timer',300);
+}
+
+function timerStartRefresh()
+{
+  $(".hidden-timer").timer({
+            duration:   '1s',   // The time to countdown from. `seconds` and `duration` are mutually exclusive
+            callback:   function() {  // This will execute after the duration has elapsed
+              saveState();
+            },                        // If duration is set, this function is called after `duration` has elapsed
+            countdown: false,
+            repeat:     true,     // If duration is set, `callback` will be called repeatedly
+            format:    '%M:%S'    // Format to show time in
+        });
 }
 
 /******************************************************************************/
@@ -119,7 +144,7 @@ function createUserScoreChart(userID)
     		]
     	};
 
-//    	$("#scoreContainer").CanvasJSChart(options);
+      // $("#scoreContainer").CanvasJSChart(options);
 
       var chart = new CanvasJS.Chart("scoreContainer",{
         theme: "theme2",
@@ -399,7 +424,6 @@ function updateMatchInfo(score) {
 
 function handleTimer(duration) {
 
-
   $("#timer").timer({
         duration:   duration,   // The time to countdown from. `seconds` and `duration` are mutually exclusive
         callback:   function() {  // This will execute after the duration has elapsed
@@ -464,6 +488,9 @@ function getGameList()
 
 function setupGame(jeu,duration)
 {
+
+  resetAll();
+
   close_popup();
   handleTimer(duration);
   /****/
@@ -492,12 +519,12 @@ function startGame()
         if (data.status === 'success'){
           setupGame(data.response.text,'5m');
           localStorage.setItem('timer',300);
-
+          timerStartRefresh();
         }
         else if(data.status === 'error'){
 
-          // REM : .html(data) :: efface tout et insere le code data
-          //        .append(data) :: Ajoute
+            // REM : .html(data) :: efface tout et insere le code data
+            //        .append(data) :: Ajoute
 
             /*$('#essais').html("");
             $('#essais').append(data.response);*/
@@ -524,8 +551,6 @@ function endGame()
 {
   compareText();
   localStorage.setItem('gameStarted',0);
-
-
 }
 
 function refresh_button_event(element)
@@ -534,6 +559,24 @@ function refresh_button_event(element)
       endGame();
     });
 }
+
+
+function resetAll()
+{
+    $("#timer").timer('remove');
+    $("#textInput").val("");
+
+    resetLocalStorage();
+}
+
+
+
+
+
+
+
+
+
 
 /***********************************************************************************************/
 
