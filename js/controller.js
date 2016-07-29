@@ -44,7 +44,6 @@ function saveState()
 {
   localStorage.setItem('timer',$('#timer').data('seconds'));
   localStorage.setItem('textInput',$('#textInput').val());
-  console.log("call : saveState");
 }
 
 
@@ -188,8 +187,6 @@ function createUserScoreChart(userID)
 
 }
 
-
-
 function createHighScoreChart(users)
 {
   var login = [];
@@ -252,8 +249,6 @@ function createHighScoreChart(users)
 
   };
 
-
-
 function adminNewGame()
 {
   var label = $('#inputLabelAdmin').val();
@@ -314,7 +309,9 @@ function compareText()
        {
          showError("Veuillez entrer du texte");
          $("#textInput").on('input',function(){
-           hideError();
+         hideError();
+         updateMatchInfo(0);
+         $("#score").html(0);
          });
        }
        else
@@ -378,19 +375,23 @@ function calculateScore(a,b, separator)
       nbDifferences ++;
     }
   }
+  console.log('->nb '+nbDifferences);
+  console.log('->text '+arrayA);
+  console.log('->a '+arrayA.length);
+  console.log('->b '+arrayB.length);
+
+  //arrayA.length -> nombre de mots pas nombre de caracteres
   if(arrayA.length <= arrayB.length/2){
     var score=50 - nbDifferences*0.5;
     if(score<0) score=0;
     return score;
   }
+  else if(arrayA.length ==0) return 0;
   else {
     var score=100 - nbDifferences*0.5;
     if(score<0) score=0;
     return score;
   }
-
-
-
 }
 
 /***********************************************************************************************/
@@ -418,7 +419,6 @@ function updateMatchInfo(score) {
   });
 
 }
-
 
 /***********************************************************************************************/
 
@@ -488,7 +488,6 @@ function getGameList()
 
 function setupGame(jeu,duration)
 {
-
   resetAll();
 
   close_popup();
@@ -517,7 +516,7 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
-          setupGame(data.response.text,'5m');
+          setupGame(data.response.text,'2s');
           localStorage.setItem('timer',300);
           timerStartRefresh();
         }
@@ -550,7 +549,8 @@ function startGame()
 function endGame()
 {
   compareText();
-  localStorage.setItem('gameStarted',0);
+  getGameList();
+  resetLocalStorage();
 }
 
 function refresh_button_event(element)
@@ -568,15 +568,6 @@ function resetAll()
 
     resetLocalStorage();
 }
-
-
-
-
-
-
-
-
-
 
 /***********************************************************************************************/
 
@@ -636,22 +627,7 @@ function event_keypress(keycode, input, element)
   });
 }
 
-function event_keypress(keycode, input, element)
-{
-  input.keypress(function (e) {
-    var key = e.which;
-    if(key == keycode)  // the enter key code
-    {
-      element.click();
-      return false;
-    }
-  });
-}
-
 /*******/
-
-
-
 
 function manageRegistration (admin){
 

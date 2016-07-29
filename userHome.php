@@ -123,12 +123,12 @@ include ('init.php');
 
                         <div class="hr-dashed"></div>
                         <div class="form-group">
-                          <div class="col-md-8 col-xs-12">
+                          <div class="col-xs-8">
                             <select id="choixJeu" class="form-control">
 
                             </select>
                           </div>
-                          <div class="col-md-4 col-xs-12">
+                          <div class="col-xs-4">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
                           <div id="essais" class=" col-xs-12 col-md-12 pt-3x"></div>
@@ -171,16 +171,13 @@ include ('init.php');
 
 
       $('#btn_nouvelle_partie').on('click', function(){
-          
           resetLocalStorage();
-
           $('#container_jeu').hide();
           $('#title').hide();
           $('#popup-view').addClass('showMe');
           getGameList();
           $('.hidden-timer').timer('pause');
           deleteLastMatch();
-
       });
 
       if(localStorage.getItem('gameStarted')==1) {
@@ -216,6 +213,8 @@ include ('init.php');
 
       $('#reload').on('click', function(){
         $('#popup-score').hide();
+        resetLocalStorage();
+        getGameList();
         location.reload();
       });
 
