@@ -59,6 +59,17 @@ if (!isset($_SESSION['id'])) {
 		</ul>
 	</div>
 
+	<div class="mobile-menu">
+		<ul>
+			<li class="ts-account">
+				<ul>
+					<li><a href="#">My Account</a></li>
+					<li><a href="logout.php">Logout</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
 	<div class="ts-main-content">
 
 		<?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ): ?>

@@ -233,3 +233,57 @@ textarea
 	font-family:'fast';
   src: url('../inspire/fonts/barbatrick.ttf');
 }
+
+/**************************************/
+
+#newGame {
+	margin-top: 15px;
+}
+
+.brand .menu-btn {
+	padding: 25px;
+}
+
+.mobile-menu {
+	display: none;
+	position: fixed;
+	width: 200px;
+	height: auto;
+	background : #232d3b;
+	z-index: 3333;
+	top:65px;
+	right: 0;
+	-webkit-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+	box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+}
+
+
+.mobile-menu li {
+	padding: 10px 20px;
+}
+.mobile-menu li a{
+	color: #fff;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+
+	.mobile-menu {
+		display:block;
+		opacity: 0;
+		-webkit-transition: opacity 0.51s ease-in-out;
+		-moz-transition: opacity 0.51s ease-in-out;
+		-ms-transition: opacity 0.51s ease-in-out;
+		-o-transition: opacity 0.51s ease-in-out;
+		transition: opacity 0.51s ease-in-out;
+	}
+	
+}
+
+.mobile-menu.open {
+  opacity: 1;
+}
+
+
+/******/

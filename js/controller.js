@@ -516,7 +516,7 @@ function startGame()
       request.done(function (data){
         //data = jQuery.parseJSON(response);
         if (data.status === 'success'){
-          setupGame(data.response.text,'2s');
+          setupGame(data.response.text,'5m');
           localStorage.setItem('timer',300);
           timerStartRefresh();
         }
@@ -783,16 +783,26 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
 
   function convert(element, text)
   {
+
+    ratio  = getScreenRatio();
+
+    var screenWidth  = $('.canvas-block').width();
+    mainBlockWidth = Math.floor((screen.width/100)*screenWidth);
+    screenWidth =Math.floor((mainBlockWidth/100)*ratio);
+
+    console.log(mainBlockWidth+"---"+screenWidth);
+    //screenWidth = 400;
+
     var size=text.length;
     var textOnCanvas = new Kinetic.Text({
       x: 0,
       y: 0,
       fill: '#000000',
-      width:500,
+      width:screenWidth,
       fontFamily: "roboto-light",
       fontSize: 16,
       fill: '#000000',
-      align: 'left',
+      align: 'center',
       padding: 10,
       text: text
     });
@@ -828,4 +838,22 @@ function registrationFormChecking (login, password, password_check,nom, prenom, 
       if(m<10) m= '0'+m;
       if(s<10) s= '0'+s;
       return (now.toLocaleDateString()+ ' ' + h + ':' + m + ':' + s + ' ' + ampm);
+  }
+
+
+
+  /**/
+
+
+  function getScreenRatio()
+  {
+     //  if mobile
+     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      // some code..
+      return 75;
+    }else {
+      // if other screen
+      return 30;
+    }
+
   }

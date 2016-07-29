@@ -79,7 +79,7 @@ include ('init.php');
               <div id="container_jeu" class="well pt-3x pb-3x block-match">
                 <div class="row">
                   <div id='errorDiv'></div>
-                  <div class="col-xs-12 col-xs-offset-8 mb-2x">
+                  <div class="col-md-12 col-md-offset-8 col-xs-12 col-xs-offset-3 mb-2x">
                     <button id="btn-instructions" title="Instructions" class="btn btn-success btn-round"><i class="fa fa-question"></i></button>
                     <button id="btn_nouvelle_partie" title="Nouvelle partie" class="btn btn-danger btn-round"><i class="glyphicon glyphicon-home"></i></button>
                   </div>
@@ -90,12 +90,12 @@ include ('init.php');
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-xs-8 col-xs-offset-2">
+                      <div class="col-xs-12 col-md-12 canvas-block">
                         <div id="jeu" class="text-center" style=" padding-left:10px";></div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-xs-8 col-xs-offset-2">
+                      <div class="col-xs-12 col-md-8 col-md-offset-2">
                         <textarea id="textInput"  class="centre mt-2x"></textarea>
                       </div>
                     </div>
@@ -123,12 +123,12 @@ include ('init.php');
 
                         <div class="hr-dashed"></div>
                         <div class="form-group">
-                          <div class="col-xs-8">
+                          <div class="col-xs-12 col-md-8">
                             <select id="choixJeu" class="form-control">
 
                             </select>
                           </div>
-                          <div class="col-xs-4">
+                          <div class="col-xs-12 col-md-4">
                              <button  class="btn btn-danger"  id="newGame">Nouvelle partie</button>
                           </div>
                           <div id="essais" class=" col-xs-12 col-md-12 pt-3x"></div>
@@ -216,6 +216,17 @@ include ('init.php');
         resetLocalStorage();
         getGameList();
         location.reload();
+      });
+
+      // Menu event handler
+      mobileMenu = $('.mobile-menu');
+      $('.menu-btn').on('click', function(){
+          if (mobileMenu.hasClass('open'))
+          {
+              mobileMenu.removeClass('open');
+          }else {
+              mobileMenu.addClass('open');
+          }
       });
 
 
