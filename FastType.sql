@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 21 Juillet 2016 à 16:15
+-- Généré le :  Ven 29 Juillet 2016 à 11:26
 -- Version du serveur :  10.1.13-MariaDB
 -- Version de PHP :  5.6.21
 
@@ -40,7 +40,9 @@ CREATE TABLE `game` (
 
 INSERT INTO `game` (`id`, `label`, `text`, `status`, `difficulty`) VALUES
 (8, 'Test', 'Test', 0, 1),
-(9, 'Jeu', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ultrices nibh velit, vitae semper turpis faucibus ut. Phasellus in risus aliquet, vehicula massa ac, vulputate sapien. In at luctus magna. Nullam lacinia mauris nec lacus fringilla vulputate. Curabitur elit enim, lacinia at augue eu, convallis pulvinar dolor. Quisque volutpat finibus libero quis ullamcorper. Nullam ut turpis tincidunt, fermentum tellus at, dignissim massa. Aliquam fermentum orci a metus lacinia, quis placerat orci consectetur. Fusce tincidunt, tellus ut pharetra gravida, augue nunc lobortis risus, non dignissim lectus sapien vel nulla. Vestibulum ornare magna nisi, vitae rutrum velit pharetra nec. Sed malesuada mi ac dignissim ornare. Integer sit amet risus felis. Donec quis arcu ac quam mattis egestas. Cras vestibulum maximus rhoncus. Integer euismod eleifend orci, id imperdiet nisi volutpat in.', 0, 3);
+(9, 'Jeu', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ultrices nibh velit, vitae semper turpis faucibus ut. Phasellus in risus aliquet, vehicula massa ac, vulputate sapien. In at luctus magna. Nullam lacinia mauris nec lacus fringilla vulputate. Curabitur elit enim, lacinia at augue eu, convallis pulvinar dolor. Quisque volutpat finibus libero quis ullamcorper. Nullam ut turpis tincidunt, fermentum tellus at, dignissim massa. Aliquam fermentum orci a metus lacinia, quis placerat orci consectetur. Fusce tincidunt, tellus ut pharetra gravida, augue nunc lobortis risus, non dignissim lectus sapien vel nulla. Vestibulum ornare magna nisi, vitae rutrum velit pharetra nec. Sed malesuada mi ac dignissim ornare. Integer sit amet risus felis. Donec quis arcu ac quam mattis egestas. Cras vestibulum maximus rhoncus. Integer euismod eleifend orci, id imperdiet nisi volutpat in.', 0, 3),
+(10, 'Test', 'Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ', 0, 1),
+(11, 'Paragraphe', 'Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -64,16 +66,7 @@ CREATE TABLE `match` (
 --
 
 INSERT INTO `match` (`id`, `nb_try`, `id_user`, `id_game`, `time_start`, `score`, `time_played`, `time_end`) VALUES
-(2, 2, 16, 8, '2016-07-20 11:27:00', 100, 7, '2016-07-20 11:27:09'),
-(3, 1, 16, 9, '2016-07-20 11:27:19', 36, 3, '2016-07-20 11:27:22'),
-(13, 2, 16, 8, '2016-07-20 11:41:12', 100, 5, '2016-07-20 11:41:18'),
-(14, 1, 3, 8, '2016-07-20 11:42:01', 99.5, 3, '2016-07-20 11:42:05'),
-(15, 2, 3, 8, '2016-07-20 11:42:11', 99.5, 4, '2016-07-20 11:42:15'),
-(16, 1, 3, 9, '2016-07-20 11:42:24', 36.5, 4, '2016-07-20 11:42:28'),
-(17, 1, 14, 8, '2016-07-20 11:42:40', 99, 2, '2016-07-20 11:42:43'),
-(26, 1, 17, 8, '2016-07-20 17:39:57', 100, 15, '2016-07-20 17:40:14'),
-(50, 3, 3, 8, '2016-07-21 07:44:41', 99.5, 14, '2016-07-21 10:44:55'),
-(51, 2, 3, 9, '2016-07-21 07:45:04', 36, 20, '2016-07-21 10:45:25');
+(1, 1, 3, 8, '2016-07-29 11:21:25', 0, 300, '-1');
 
 -- --------------------------------------------------------
 
@@ -134,12 +127,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `game`
 --
 ALTER TABLE `game`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `match`
 --
 ALTER TABLE `match`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
